@@ -1,4 +1,5 @@
 package eg.edu.alexu.csd.datastructure.mailServer.LogicClasses;
+import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.IStack;
 /**
  * This class implements IStack interface
  * to create and manipulate stacks.

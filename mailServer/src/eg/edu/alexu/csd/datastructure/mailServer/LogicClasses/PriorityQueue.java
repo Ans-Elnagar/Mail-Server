@@ -1,4 +1,5 @@
 package eg.edu.alexu.csd.datastructure.mailServer.LogicClasses;
+import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.IPriorityQueue;
 public class PriorityQueue implements IPriorityQueue {
 	private class Node{
 		private Object element;
