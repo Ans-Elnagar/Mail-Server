@@ -1,11 +1,11 @@
 package eg.edu.alexu.csd.datastructure.mailServer.LogicClasses;
-import java.util.Date;
+
 import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
 public class Contact implements IContact {
 	private String name;
 	private String email;
 	private String password;
-	private Date date;
+	private String date;
 	private String gender;
 	private ILinkedList friends;
 	public Contact () {

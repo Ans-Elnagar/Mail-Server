@@ -9,9 +9,7 @@ class AppTest {
 
 	@Test
 	void signupTest() {
-		App app = new App();
-		Contact user = new Contact();
-		assertEquals(false, app.signin("an@g.com","He125"));
+		
 	}
 
 }
