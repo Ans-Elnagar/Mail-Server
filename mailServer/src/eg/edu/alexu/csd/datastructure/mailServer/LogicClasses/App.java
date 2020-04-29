@@ -1,66 +1,42 @@
 package eg.edu.alexu.csd.datastructure.mailServer.LogicClasses;
 import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
-//importing in static way to use the methods without making an object
-import static eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.SignUp.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 public class App implements IApp {
 	@Override
 	public boolean signin(String email, String password) {
-		boolean signed=false;
-		FileReader read=null;
-		BufferedReader br=null;
-		try {
-			read = new FileReader("Users\\user.txt");
-			br = new BufferedReader(read);
-			String mail,pass;
-			while((mail=br.readLine())!=null) {
-				pass=br.readLine();
-				if(email==mail&&password==pass) {
-					signed=true;
-					break;
+		File users = new File("Users/users.txt");
+		try (
+				Scanner input = new Scanner(users);
+		){
+			while(input.hasNextLine()) {
+				String currentEmail = input.nextLine();
+				String currentPassword = input.nextLine();
+				if(email.equals(currentEmail)) {
+					if(password.equals(currentPassword))
+						return true;
+					else
+						return false;
 				}
 			}
-		} catch (FileNotFoundException e) {
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				read.close();
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return signed;
+		} catch (FileNotFoundException e) { }
+		return false;
 	}
 
 	@Override
 	public boolean signup(IContact contact) {
 		//Validation of every input is in GUI classes
-		//create users folder and users.txt if it's not created 
-		File mainFolder= new File("Users");
-		mainFolder.mkdir();
-		File usersInfo = new File(mainFolder,"users.txt");
-		try {
-			usersInfo.createNewFile();
-		} catch (IOException e) {
-			System.out.println("Error occured while creating the file");
-			e.printStackTrace();
-		}
- 		if(!checkmail(((Contact) contact).getE_mail(),usersInfo))
+		//create users folder and users.txt if it's not created
+		File users = new File("Users/users.txt");
+		if( ! users.exists() )
+			FileTools.createFile(users);
+ 		if(FileTools.isAvailableEmail(((Contact) contact).getEmail()))
 			return false;
 		//first userFolder and user.txt and friends.txt which hold contact Info
-		File userFolder = createUserTxtAndDir(mainFolder,(Contact) contact);
- 		//create folders and txt files
- 		createUserFiles(userFolder);
+		File userFolder = FileTools.createUserTxtAndDir((Contact) contact);
+ 		//create folders and text files
+ 		FileTools.createUserFiles(userFolder);
  		return true;
 	}
 
