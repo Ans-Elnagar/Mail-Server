@@ -62,4 +62,12 @@ public class FileTools {
 			createFile(new File( folder.getPath() + "/" + name + "/info.txt"));
 		}
 	}
+	
+	public static void addEmailAndPass(String email, String pass) { 
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter("Users/users.txt", true)); 
+			out.write(email+"/n"+pass+"/n");
+			out.close();
+		} catch (IOException e) { } 
+	} 
 }

@@ -28,15 +28,17 @@ public class App implements IApp {
 	public boolean signup(IContact contact) {
 		//Validation of every input is in GUI classes
 		//create users folder and users.txt if it's not created
+		Contact data = (Contact) contact;
 		File users = new File("Users/users.txt");
 		if( ! users.exists() )
 			FileTools.createFile(users);
- 		if(FileTools.isAvailableEmail(((Contact) contact).getEmail()))
+ 		if(FileTools.isAvailableEmail(data.getEmail()))
 			return false;
 		//first userFolder and user.txt and friends.txt which hold contact Info
-		File userFolder = FileTools.createUserTxtAndDir((Contact) contact);
+		File userFolder = FileTools.createUserTxtAndDir(data);
  		//create folders and text files
  		FileTools.createUserFiles(userFolder);
+ 		FileTools.addEmailAndPass(data.getEmail(), data.getPassword());
  		return true;
 	}
 
