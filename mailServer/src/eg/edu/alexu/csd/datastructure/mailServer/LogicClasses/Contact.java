@@ -7,9 +7,9 @@ public class Contact implements IContact {
 	private String password;
 	private String date;
 	private String gender;
-	private ILinkedList friends;
+	public ILinkedList friends;
 	public Contact () {
-		friends = new Slinkedlist();
+		friends = new SLinkedList();
 	}
 	public String getName() {
 		return name;
@@ -41,8 +41,4 @@ public class Contact implements IContact {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public ILinkedList getFriends() {
-		return friends;
-	}
-	
 }

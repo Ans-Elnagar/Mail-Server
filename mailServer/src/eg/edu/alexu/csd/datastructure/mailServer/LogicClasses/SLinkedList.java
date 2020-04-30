@@ -1,6 +1,6 @@
 package eg.edu.alexu.csd.datastructure.mailServer.LogicClasses;
 import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.ILinkedList;
-public class Slinkedlist implements ILinkedList{
+public class SLinkedList implements ILinkedList{
    private static class Node {
 		private Object element;
 		private Node next;
@@ -25,7 +25,7 @@ public class Slinkedlist implements ILinkedList{
 
     private int size;
     Node head,tail;
-    public Slinkedlist() {
+    public SLinkedList() {
     	head=null;
     	tail=null;
     	size=0;
@@ -139,7 +139,7 @@ public class Slinkedlist implements ILinkedList{
 
 	@Override
 	public ILinkedList sublist(int fromIndex, int toIndex) {
-		Slinkedlist list = new Slinkedlist();
+		SLinkedList list = new SLinkedList();
 		if (fromIndex>=size||toIndex>=size||fromIndex<0||toIndex<0)
 			throw new IndexOutOfBoundsException();
 		Node p=head;

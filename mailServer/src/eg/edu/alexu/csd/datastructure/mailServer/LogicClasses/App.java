@@ -4,6 +4,7 @@ import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
 import java.io.*;
 import java.util.Scanner;
 public class App implements IApp {
+	public Contact userContact= new Contact();
 	@Override
 	public boolean signin(String email, String password) {
 		File users = new File("Users/users.txt");
@@ -14,8 +15,11 @@ public class App implements IApp {
 				String currentEmail = input.nextLine();
 				String currentPassword = input.nextLine();
 				if(email.equals(currentEmail)) {
-					if(password.equals(currentPassword))
+					if(password.equals(currentPassword)) {
+						//load contact data from the his user file into contact object
+						FileTools.setContactInfo(currentEmail,userContact);
 						return true;
+					}
 					else
 						return false;
 				}
