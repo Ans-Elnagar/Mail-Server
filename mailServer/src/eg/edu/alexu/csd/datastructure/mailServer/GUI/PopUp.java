@@ -19,7 +19,7 @@ public class PopUp {
 			Scene scene = new Scene(root);
 			Stage alertStage = new Stage();
 			alertStage.setScene(scene);
-			alertStage.initStyle(StageStyle.TRANSPARENT);
+			alertStage.initStyle(StageStyle.UNDECORATED);
 			alertStage.setResizable(false);
 			alertStage.show();
 		}catch (IOException e) {}

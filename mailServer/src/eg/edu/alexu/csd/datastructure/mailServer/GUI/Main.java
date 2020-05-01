@@ -17,7 +17,7 @@ public class Main extends Application {
 		Parent root = FXMLLoader.load(getClass().getResource("SignInScene.fxml"));
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		primaryStage.initStyle(StageStyle.TRANSPARENT);
+		primaryStage.initStyle(StageStyle.UNDECORATED);
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}

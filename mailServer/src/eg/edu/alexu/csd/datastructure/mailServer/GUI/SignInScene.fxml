@@ -55,7 +55,7 @@
       </VBox>
    </center>
    <top>
-      <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="250.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER_RIGHT">
+      <HBox alignment="CENTER_RIGHT" onMouseDragged="#barDragged" onMouseMoved="#barPressed" prefHeight="20.0" prefWidth="250.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER_RIGHT">
          <padding>
             <Insets left="5.0" right="5.0" top="5.0" />
          </padding>

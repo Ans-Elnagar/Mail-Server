@@ -9,6 +9,7 @@ import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 public class SignInController implements Initializable {
 	@FXML private TextField txtEmail;
@@ -49,10 +50,24 @@ public class SignInController implements Initializable {
 			Main.stage.setScene(scene);
 		} catch (IOException e) {}
 	}
+	//handling moving the stage
+	double x,y;
+	@FXML
+    public void barPressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+	@FXML
+    public void barDragged(MouseEvent event) {
+        Main.stage.setX(event.getScreenX() - x);
+        Main.stage.setY(event.getScreenY() - y);
+    }
 	//Handling close and minimize buttons (ImageViews)
+	@FXML
 	public void closeClicked() {
 		Main.stage.close();
 	}
+	@FXML
 	public void minimizeClicked() {
 		Main.stage.setIconified(true);
 	}

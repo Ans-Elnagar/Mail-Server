@@ -9,6 +9,7 @@ import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 public class SignUpController implements Initializable{
 	@FXML private TextField txtName;
@@ -63,8 +64,7 @@ public class SignUpController implements Initializable{
 					Main.stage.setScene(scene);
 				} catch (IOException e) {}
 				return;
-			}
-			else
+			}else
 				message += "- Someone is using this email, please use another one\n";
 		}
 		Main.popUp.createAlert(message);
@@ -150,21 +150,32 @@ public class SignUpController implements Initializable{
 	        return false;
 	    }
 	    return true;
-	   }
+	}
 	
-	
+	//handling moving the stage
+	double x,y;
+	@FXML
+    public void barPressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+	@FXML
+    public void barDragged(MouseEvent event) {
+        Main.stage.setX(event.getScreenX() - x);
+        Main.stage.setY(event.getScreenY() - y);
+    }
 	//Handling close and minimize buttons (ImageViews)
-		public void closeClicked() {
-			Main.stage.close();
-		}
-		public void minimizeClicked() {
-			Main.stage.setIconified(true);
-		}
-		public void backClicked() {
-			try {
-				Parent root = FXMLLoader.load(getClass().getResource("SignInScene.fxml"));
-				Scene scene = new Scene(root);
-				Main.stage.setScene(scene);
-			} catch (IOException e) {}
-		}
+	public void closeClicked() {
+		Main.stage.close();
+	}
+	public void minimizeClicked() {
+		Main.stage.setIconified(true);
+	}
+	public void backClicked() {
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("SignInScene.fxml"));
+			Scene scene = new Scene(root);
+			Main.stage.setScene(scene);
+		} catch (IOException e) {}
+	}
 }

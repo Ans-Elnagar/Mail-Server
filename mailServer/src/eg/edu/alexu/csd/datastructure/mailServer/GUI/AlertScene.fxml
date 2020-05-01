@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" style="-fx-background-color: #77606f; -fx-border-width: 5; -fx-border-color: #ff3300;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.AlertController">
+<VBox alignment="TOP_CENTER" onMouseDragged="#dragged" onMousePressed="#pressed" style="-fx-background-color: #77606f; -fx-border-width: 5; -fx-border-color: #ff3300;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.AlertController">
    <children>
       <ImageView fitHeight="52.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
          <image>
