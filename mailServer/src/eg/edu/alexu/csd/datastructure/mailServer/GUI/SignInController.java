@@ -1,50 +1,59 @@
 package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.*;
-import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.stage.Stage;
 import javafx.fxml.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 
 public class SignInController implements Initializable {
 	@FXML private TextField txtEmail;
 	@FXML private PasswordField txtPassword;
-	@FXML private Button btSignIn;
-	@FXML private Button btSignUp;
-	@FXML private ImageView closeIcon;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// Clearing all fields
-		/*txtEmail.clear(); txtPassword.clear();
-		txtSignName.clear(); txtSignEmail.clear();
-		txtSignPassword.clear(); txtSignDateYear.clear();
-		txtSignDateMonth.clear(); txtSignDateDay.clear();*/
-		
-		
+		Main.app = new App();
 	}
-	IApp app = new App();
 	@FXML
-	public void signInAction() {
+	/**
+	 * When sign in button is clicked 
+	 * if the email and password are correct then changes the scene to InternalScene
+	 * if not then shows an designed alert Stage with a helping message
+	 */
+	public void signInClicked() {
 		String email = txtEmail.getText().trim().toLowerCase();
 		String password = txtPassword.getText();
 		if(email.isEmpty() || password.isEmpty()) {
-			
-		}
-		if(app.signin(email, password)) {
-			
+			Main.popUp.createAlert("Fill empty fields please.");
+		}else if(Main.app.signin(email, password)) {
+			try {
+				Parent root = FXMLLoader.load(getClass().getResource("InternalScene.fxml"));
+				Scene scene = new Scene(root);
+				Main.stage.setScene(scene);
+			} catch (IOException e) {}
 		} else {
-			
+			Main.popUp.createAlert("Wrong email or password.\nTry again or create new account.");
 		}
 	}
-	//Handling close and minimise buttons (ImageViews)
+	/**
+	 * Changes the scene from sign in to sign up when sign up button is clicked.
+	 * Does nothing if the file SignUpScene.fxml is missing.
+	 */
+	public void signUpClicked() {
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("SignUpScene.fxml"));
+			Scene scene = new Scene(root);
+			Main.stage.setScene(scene);
+		} catch (IOException e) {}
+	}
+	//Handling close and minimize buttons (ImageViews)
 	public void closeClicked() {
-		((Stage)txtEmail.getScene().getWindow()).close();
+		Main.stage.close();
 	}
 	public void minimizeClicked() {
-		((Stage)txtEmail.getScene().getWindow()).setIconified(true);
+		Main.stage.setIconified(true);
 	}
 }

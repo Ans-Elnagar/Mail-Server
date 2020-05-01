@@ -15,25 +15,28 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.SignInController">
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="101.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #57606f;" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="101.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: #57606f;" BorderPane.alignment="CENTER">
          <children>
             <Label text="Welcome" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="25.0" />
                </font>
             </Label>
-            <TextField fx:id="txtEmail" promptText="Email">
+            <TextField fx:id="txtEmail" alignment="CENTER" promptText="Email">
                <VBox.margin>
                   <Insets />
                </VBox.margin></TextField>
-            <PasswordField fx:id="txtPassword" promptText="Password" />
-            <HBox alignment="CENTER" spacing="10.0">
+            <PasswordField fx:id="txtPassword" alignment="CENTER" promptText="Password">
+               <VBox.margin>
+                  <Insets bottom="2.05" />
+               </VBox.margin></PasswordField>
+            <HBox alignment="CENTER" spacing="30.0">
                <children>
-                  <Button fx:id="btSignUp" mnemonicParsing="false" text="Sign Up">
+                  <Button mnemonicParsing="false" onAction="#signUpClicked" text="Sign Up">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="btSignIn" mnemonicParsing="false" onAction="#signInAction" text="Sign in">
+                  <Button mnemonicParsing="false" onAction="#signInClicked" text="Sign in">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -41,6 +44,9 @@
                         <Insets />
                      </HBox.margin></Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="3.0" />
+               </VBox.margin>
             </HBox>
          </children>
          <padding>
@@ -49,7 +55,7 @@
       </VBox>
    </center>
    <top>
-      <HBox alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="314.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER_RIGHT">
+      <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="250.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER_RIGHT">
          <padding>
             <Insets left="5.0" right="5.0" top="5.0" />
          </padding>
