@@ -43,7 +43,7 @@ public class SignUpController implements Initializable{
 			message += "- Enter a valid name such as \"Name nickname\"\n";
 		if(!validLetters(name,""))
 			message += "- Name contains invalid symbols\n";
-		String email = txtEmail.getText().trim();
+		String email = txtEmail.getText().trim().toLowerCase();
 		if(email.isEmpty())
 			message += "- Enter a valid email such as \"example@example.com\"\n";
 		if(isInvalidEmail(email))
