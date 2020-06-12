@@ -5,6 +5,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.ResourceBundle;
+
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.App;
 import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -52,12 +54,12 @@ public class SignUpController implements Initializable{
 		if(!isValidDate(yearBox.getValue(),monthBox.getValue(),dayBox.getValue()))
 			message += "- The selected birthday is not a true date.\n";
 		if(message.isEmpty()) {
-			Main.app.userContact.setName(name);
-			Main.app.userContact.setEmail(email);
-			Main.app.userContact.setPassword(password);
-			Main.app.userContact.setDate(dayBox.getValue()+"/"+monthBox.getValue()+"/"+yearBox.getValue());
-			Main.app.userContact.setGender(genderBox.getValue());
-			if(Main.app.signup(Main.app.userContact)) {
+			App.userContact.setName(name);
+			App.userContact.setEmail(email);
+			App.userContact.setPassword(password);
+			App.userContact.setDate(dayBox.getValue()+"/"+monthBox.getValue()+"/"+yearBox.getValue());
+			App.userContact.setGender(genderBox.getValue());
+			if(Main.app.signup(App.userContact)) {
 				try {
 					Parent root = FXMLLoader.load(getClass().getResource("InternalScene.fxml"));
 					Scene scene = new Scene(root);

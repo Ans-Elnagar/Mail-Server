@@ -1,5 +1,9 @@
 package eg.edu.alexu.csd.datastructure.mailServer.LogicClasses;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 public class FileTools {
 	public static File createFile(File file) {
@@ -69,7 +73,7 @@ public class FileTools {
 		String[] names= {"Inbox","Sent","Draft","Trash"};
 		for(String name: names) {
 			//creating txtFile in Folders to hold mails Info
-			createFile(new File( folder.getPath() + "/" + name + "/info.txt"));
+			createFile(new File( folder.getPath() + "/" + name + "/indexFile.txt"));
 		}
 	}
 	
@@ -107,4 +111,72 @@ public class FileTools {
 			return;
 		}	
 	}
+	///////////////////
+	/*
+	 indexFile{
+		 //every line with one mail info 
+		 subject time senderMail #no of receivers "receivers mails one by one" #no of attachments "names of attachments"
+		 //mail Folder of every mail named after "subject time"
+		 //mail body is on dest+subject+" "+time+mailBody.txt
+	 }*/
+	public static void createMailFiles(Mail mail,String user,String folder) {
+		//creating mail main folder
+		File mailFolder = new File("Users/"+user+"/"+folder+"/"+
+				mail.getSubject()+" "+mail.getTime());
+		mailFolder.mkdir();
+		//adding info to indexFile.txt
+		writingInFile(new File(mailFolder.getParent()+"/indexFile.txt"),indexFileString(mail,user));
+		// create mailBody.txt and append the message
+		writingInFile(new File(mailFolder.getPath()+"/mailBody.txt"),mail.getMailBody());
+		// copying attachments to the it's folder
+		File attachFolder = new File(mailFolder.getPath()+"/Attachments");
+		attachFolder.mkdir();
+		for(int i=0;i<mail.attachments.size();i++) {
+			copyFiles((File) mail.attachments.get(i),attachFolder);
+		}
+		
+	}
+	/// a method to write in files
+	public static void writingInFile(File main,String text) {
+		//creating the file if not exist
+		if(!main.exists())
+			createFile(main);
+		// writing in the file
+		 try(BufferedWriter out = new BufferedWriter(new FileWriter(main.getPath(), true));) {
+			 out.write(text);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+	}
+	// creating the string required to be added to index file
+	public static String indexFileString(Mail mail,String additionUser) {
+		String result=mail.getSubject()+","+mail.getTime()+",";
+			result+=mail.receivers.size()+",";
+		for(int i=0;i<mail.receivers.size();i++) {
+			String receiver =(String) mail.receivers.dequeue();
+			result+=receiver+",";
+			mail.receivers.enqueue(receiver);
+		}
+		// then attachments names
+		result+=mail.attachments.size();
+		for(int i=0;i<mail.attachments.size();i++)
+			result+=","+((File)mail.attachments.get(i)).getName();
+		return result+"\n";
+	}
+	//////////////////
+	//////////////////
+	////Copying Files///
+	//////////////////
+	public static void copyFiles(File attach,File destFolder) {
+		Path to = Paths.get(destFolder.getPath()+"/"+attach.getName());
+		try {
+			Files.copy(attach.toPath(), to);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
+
+
+
+

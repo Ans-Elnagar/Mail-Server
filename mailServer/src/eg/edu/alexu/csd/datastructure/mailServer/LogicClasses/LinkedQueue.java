@@ -61,5 +61,8 @@ public class LinkedQueue implements IQueue,ILinkedBased {
 	public int size() {
 	return size;
 	}
+	public Object peek() {
+		return head.getElement();
+	}
 
 }

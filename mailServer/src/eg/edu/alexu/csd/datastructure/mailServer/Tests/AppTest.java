@@ -2,8 +2,11 @@ package eg.edu.alexu.csd.datastructure.mailServer.Tests;
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.App;
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Contact;
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.FileTools;
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Mail;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +31,38 @@ class AppTest {
 	void SignIn() {
 		App f=new App();
 		f.signin("fdgdf@ysfl.com","44454564");
-		assertEquals("44454564",f.userContact.getPassword());
+		assertEquals("44454564",App.userContact.getPassword());
 	}
+	@Test 
+	void composeRight() {
+		App f=new App();
+		Mail mail = new Mail();
+		mail.receivers.enqueue("seifgneedy@Fmail.com");
+		mail.receivers.enqueue("seifgn2@gldl.com");
+		mail.receivers.enqueue("fdgdf@ysfl.com");
+		mail.setMailBody("we\nwill\ngo\nand\nfuck\nourself");
+		mail.setTime(System.currentTimeMillis()/1000);
+		mail.setSubject("hello world");
+		mail.setSender("seifgneedy@gmail.com");
+		mail.attachments.add(new File("C:/Users/seifg/Desktop/احمد خالد توفيق/KAT2018/KAT43.pdf"));
+		assertTrue(f.compose(mail));
+	}
+	/*@Test 
+	void mailFiles() {
+		Mail mail = new Mail();
+		mail.setMailBody("we\nwill\ngo\nand\nfuck\nourself");
+		mail.setTime(System.currentTimeMillis()/1000);
+		mail.setSubject("hello world");
+		mail.receivers.enqueue("seifgn2@gldl.com");
+		mail.receivers.enqueue("seifgneedy@gmail.com");
+		mail.attachments.add(new File("Users/users.txt"));
+		FileTools.createMailFiles(mail, "seifgneedy@Fmail.com", "Sent");
+	}*/
 }
+
+
+
+
+
+
+

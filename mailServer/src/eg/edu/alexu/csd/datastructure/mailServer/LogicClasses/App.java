@@ -4,7 +4,8 @@ import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
 import java.io.*;
 import java.util.Scanner;
 public class App implements IApp {
-	public Contact userContact= new Contact();
+	public static Contact userContact= new Contact();
+	
 	@Override
 	public boolean signin(String email, String password) {
 		File users = new File("Users/users.txt");
@@ -66,14 +67,34 @@ public class App implements IApp {
 
 	@Override
 	public void moveEmails(ILinkedList mails, IFolder des) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public boolean compose(IMail email) {
-		// TODO Auto-generated method stub
-		return false;
+		Mail mail= (Mail) email;
+		// first , check that all receivers are real and there's no repeat 
+		// and not sending to himself
+		String all="";
+		for(int i=0;i<mail.receivers.size();i++) {
+			String curr=(String)mail.receivers.dequeue();
+			if((!FileTools.isAvailableEmail(curr))||all.contains(curr)||curr.equals(mail.getSender()))
+				return false;
+			all+=curr+" ";
+			mail.receivers.enqueue(curr);
+		}
+		// why ? IDK
+		all=null;
+		// then saving this mail as folder at sent folder
+		FileTools.createMailFiles(mail,mail.getSender(),"Sent");
+		// then saving this mail Files also at receivers Folders
+		for(int i=0;i<mail.receivers.size();i++) {
+			FileTools.createMailFiles(mail,(String) mail.receivers.peek(),"Inbox");
+			mail.receivers.enqueue(mail.receivers.dequeue());
+		}
+		/////////////////////////////
+		return true;
 	}
 
 }
