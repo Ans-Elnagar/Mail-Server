@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.Scanner;
 public class App implements IApp {
 	public static Contact userContact= new Contact();
-	
+	public SLinkedList mails=new SLinkedList();
 	@Override
 	public boolean signin(String email, String password) {
 		File users = new File("Users/users.txt");
@@ -49,14 +49,20 @@ public class App implements IApp {
 
 	@Override
 	public void setViewingOptions(IFolder folder, IFilter filter, ISort sort) {
-		// TODO Auto-generated method stub
+		mails=FileTools.loadMailsToList((Folder) folder);
+		Sort currentSort=(Sort) sort;
+		currentSort.quickSort(mails);
+		// TODO Apply filtering on this mails
 		
 	}
 
 	@Override
 	public IMail[] listEmails(int page) {
-		// TODO Auto-generated method stub
-		return null;
+		Mail[] mailPage=new Mail[10];
+		int start =10*(page-1);
+		for(int i=0,j=start;i<10&&j<mails.size();i++,j++)
+			mailPage[i]=(Mail) mails.get(j);
+		return mailPage;
 	}
 
 	@Override

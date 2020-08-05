@@ -128,7 +128,7 @@ public class FileTools {
 		writingInFile(new File(mailFolder.getParent()+"/indexFile.txt"),indexFileString(mail,user));
 		// create mailBody.txt and append the message
 		writingInFile(new File(mailFolder.getPath()+"/mailBody.txt"),mail.getMailBody());
-		// copying attachments to the it's folder
+		// copying attachments to its folder
 		File attachFolder = new File(mailFolder.getPath()+"/Attachments");
 		attachFolder.mkdir();
 		for(int i=0;i<mail.attachments.size();i++) {
@@ -150,7 +150,7 @@ public class FileTools {
 	}
 	// creating the string required to be added to index file
 	public static String indexFileString(Mail mail,String additionUser) {
-		String result=mail.getSubject()+","+mail.getTime()+",";
+		String result=mail.getSubject()+","+mail.getTime()+","+mail.getSender()+",";
 			result+=mail.receivers.size()+",";
 		for(int i=0;i<mail.receivers.size();i++) {
 			String receiver =(String) mail.receivers.dequeue();
@@ -161,6 +161,7 @@ public class FileTools {
 		result+=mail.attachments.size();
 		for(int i=0;i<mail.attachments.size();i++)
 			result+=","+((File)mail.attachments.get(i)).getName();
+		result+=","+mail.getImportance();
 		return result+"\n";
 	}
 	//////////////////
@@ -174,6 +175,45 @@ public class FileTools {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public static SLinkedList loadMailsToList(Folder folder) {
+		SLinkedList mails=new SLinkedList();
+		try(Scanner in=new Scanner(folder.getPath()+"/indexFile.txt")){
+			while(in.hasNext()) {
+				String [] line=in.nextLine().split(",");
+				Mail mail=new Mail();
+				mail.setSubject(line[0]);
+				mail.setTime(Long.parseLong(line[1]));
+				mail.setSender(line[2]);
+				int noOfReceivers=Integer.parseInt(line[3]);
+				LinkedQueue receivers=new LinkedQueue();
+				int i=4;
+				for(int j=0;j<noOfReceivers;j++) 
+					receivers.enqueue(line[i++]);
+				mail.receivers=receivers;
+				SLinkedList attachs=new SLinkedList();
+				int noOfAttachs=Integer.parseInt(line[i++]);
+				for(int j=0;j<noOfAttachs;j++)
+					attachs.add(line[i++]);
+				mail.setAttachments(attachs);
+				mail.setImportance(Integer.parseInt(line[i]));
+				mail.setMailBody(readFile(folder.getPath()+"/"+mail.getSubject()+" "+mail.getTime()+"/mailBody.txt"));
+				mail.setMailBody(folder.getFolder());
+				mails.add(mail);
+			}
+			
+		}
+		return mails;
+	}
+	public static String readFile(String path) {
+		String result="";
+		try(Scanner input =new Scanner(new File(path));){
+			while(input.hasNextLine())
+				result+=input.nextLine()+"/n";
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
 

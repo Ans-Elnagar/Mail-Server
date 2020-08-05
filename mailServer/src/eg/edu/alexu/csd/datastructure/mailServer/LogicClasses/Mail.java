@@ -16,8 +16,10 @@ public class Mail implements IMail {
 	private String mailBody;
 	// list of attachments
 	public ILinkedList attachments;
+	private int importance;
 	//constructor
 	public Mail() {
+		importance=0;
 		setAttachments(new SLinkedList());
 		receivers=new LinkedQueue();
 	}
@@ -62,4 +64,12 @@ public class Mail implements IMail {
 	public void setAttachments(ILinkedList attachments) {
 		this.attachments = attachments;
 	}
+	public int getImportance() {
+		// TODO Auto-generated method stub
+		return importance;
+	}
+	public void setImportance(int importance) {
+		this.importance=importance;
+	}
+	
 }
