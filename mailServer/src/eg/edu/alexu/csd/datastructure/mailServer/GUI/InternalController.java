@@ -1,21 +1,50 @@
 package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.App;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 public class InternalController implements Initializable {
-
+	@FXML 
+	private Circle profileImage;
+	@FXML
+	private Label name;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		
+		initialProfileImage(profileImage);
+		name.setText(App.userContact.getName());
 	}
+	 
+	static void initialProfileImage(Circle profile) {
+		File file =new File("Users//"+App.userContact.getEmail()+"//Profile.jpg");
+		Image image = new Image(file.toURI().toString(),false);
+		profile.setFill(new ImagePattern(image));
+	}
+	@FXML
+	 void editProfile() {
 	
-	
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("EditProfile.fxml"));
+			Main.stage.setScene(new Scene(root));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	//handling moving the stage
 	double x,y;

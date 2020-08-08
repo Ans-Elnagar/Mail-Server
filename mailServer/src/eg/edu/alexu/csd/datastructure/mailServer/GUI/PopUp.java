@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -18,6 +19,7 @@ public class PopUp {
 			controller.setMessage(message);
 			Scene scene = new Scene(root);
 			Stage alertStage = new Stage();
+			alertStage.initModality(Modality.APPLICATION_MODAL);
 			alertStage.setScene(scene);
 			alertStage.initStyle(StageStyle.UNDECORATED);
 			alertStage.setResizable(false);

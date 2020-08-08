@@ -44,6 +44,8 @@ public class App implements IApp {
  		//create folders and text files
  		FileTools.createUserFiles(userFolder);
  		FileTools.addEmailAndPass(data.getEmail(), data.getPassword());
+ 		//adding default profile pic
+ 		FileTools.copyFiles(new File("icons/Profile.jpg"),userFolder);
  		return true;
 	}
 

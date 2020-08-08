@@ -168,10 +168,10 @@ public class FileTools {
 	//////////////////
 	////Copying Files///
 	//////////////////
-	public static void copyFiles(File attach,File destFolder) {
-		Path to = Paths.get(destFolder.getPath()+"/"+attach.getName());
+	public static void copyFiles(File required,File destFolder) {
+		Path to = Paths.get(destFolder.getPath()+"/"+required.getName());
 		try {
-			Files.copy(attach.toPath(), to);
+			Files.copy(required.toPath(), to);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

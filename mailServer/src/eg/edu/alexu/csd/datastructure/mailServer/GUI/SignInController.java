@@ -32,9 +32,9 @@ public class SignInController implements Initializable {
 		}else if(Main.app.signin(email, password)) {
 			try {
 				Parent root = FXMLLoader.load(getClass().getResource("InternalScene.fxml"));
-				Scene scene = new Scene(root);
-				Main.stage.setScene(scene);
-			} catch (IOException e) {}
+				Main.stage.setScene(new Scene(root));
+			} catch (IOException e) {System.out.println(e.getMessage()+'\n'+e.getStackTrace());}
+			
 		} else {
 			Main.popUp.createAlert("Wrong email or password.\nTry again or create new account.");
 		}
@@ -46,8 +46,7 @@ public class SignInController implements Initializable {
 	public void signUpClicked() {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("SignUpScene.fxml"));
-			Scene scene = new Scene(root);
-			Main.stage.setScene(scene);
+			Main.stage.setScene(new Scene(root));
 		} catch (IOException e) {}
 	}
 	//handling moving the stage

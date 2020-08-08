@@ -1,6 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.InternalController" />
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.InternalController">
+   <top>
+      <AnchorPane prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="975.0" layoutY="5.0" onMouseClicked="#closeClicked" pickOnBounds="true" preserveRatio="true" translateX="-1.0" AnchorPane.bottomAnchor="5.399999999999999" AnchorPane.leftAnchor="975.0" AnchorPane.rightAnchor="9.0">
+               <image>
+                  <Image url="@../../../../../../../../icons/close.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="949.0" layoutY="5.0" onMouseClicked="#minimizeClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../icons/minimize.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label layoutX="23.0" layoutY="4.0" text="FMail">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+   <left>
+      <VBox prefHeight="678.0" prefWidth="246.0" style="-fx-border-color: #000000; -fx-background-color: #57606f;">
+         <children>
+            <VBox alignment="CENTER" prefHeight="233.0" prefWidth="244.0" style="-fx-border-color: #000000; -fx-background-color: #838c9c;">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" ellipsisString=".." graphicTextGap="1.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: #57606f;" text="Edit Profile" textFill="WHITE" translateX="-65.0">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Circle fx:id="profileImage" fill="DODGERBLUE" radius="80.0" stroke="#847373" strokeType="INSIDE" strokeWidth="0.5">
+                     <effect>
+                        <DropShadow color="#242323" />
+                     </effect></Circle>
+                  <Label fx:id="name" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="244.0" style="-fx-background-color: #a3afc4;" text="Inbox">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="244.0" style="-fx-background-color: #a3afc4;" text="Sent">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="244.0" style="-fx-background-color: #a3afc4;" text="Trash">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button layoutX="11.0" layoutY="384.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="244.0" style="-fx-background-color: #a3afc4;" text="Draft">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+      <AnchorPane prefHeight="52.0" prefWidth="1000.0" style="-fx-background-color: #838c9c; -fx-border-color: #000000;" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="123.0" layoutX="79.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../icons/Logo.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" ellipsisString=".." graphicTextGap="1.0" layoutX="766.0" layoutY="19.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #57606f;" text="Compose" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </bottom>
+   <right>
+      <AnchorPane prefHeight="596.0" prefWidth="762.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutX="-5.0" prefHeight="130.0" prefWidth="762.0">
+               <children>
+                  <ChoiceBox layoutX="54.0" layoutY="83.0" prefWidth="150.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
