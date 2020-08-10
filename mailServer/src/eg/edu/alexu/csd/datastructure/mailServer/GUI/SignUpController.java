@@ -5,8 +5,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.ResourceBundle;
-
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.App;
 import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,24 +15,12 @@ public class SignUpController implements Initializable{
 	@FXML private TextField txtName;
 	@FXML private TextField txtEmail;
 	@FXML private PasswordField txtPassword;
-	@FXML private ChoiceBox<Integer> dayBox;
-	@FXML private ChoiceBox<Integer> monthBox;
-	@FXML private ChoiceBox<Integer> yearBox;
+	@FXML private DatePicker birthdayPicker;
 	@FXML private ChoiceBox<String> genderBox;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		genderBox.getItems().addAll("Male","Female");
 		genderBox.setValue("Male");
-		int currentYear = ((int) (System.currentTimeMillis()/(1000.0*3600*24*365.25)+0.5))+1970;
-		for(int i=currentYear-100; i<=currentYear; i++)
-			yearBox.getItems().add(i);
-		yearBox.setValue(currentYear);
-		for(int i=1; i<=12; i++)
-			monthBox.getItems().add(i);
-		monthBox.setValue(1);
-		for(int i=1; i<=31; i++)
-			dayBox.getItems().add(i);
-		dayBox.setValue(1);
 	}
 	public void signUpClicked(){
 		String message = "";
@@ -51,15 +37,15 @@ public class SignUpController implements Initializable{
 		String password = txtPassword.getText();
 		if(password.isEmpty())
 			message += "- Password Field is empty.\n        Please enter a password\n";
-		if(!isValidDate(yearBox.getValue(),monthBox.getValue(),dayBox.getValue()))
-			message += "- The selected birthday is not a true date.\n";
+		//if(!isValidDate(yearBox.getValue(),monthBox.getValue(),dayBox.getValue()))
+			//message += "- The selected birthday is not a true date.\n";
 		if(message.isEmpty()) {
-			App.userContact.setName(name);
-			App.userContact.setEmail(email);
-			App.userContact.setPassword(password);
-			App.userContact.setDate(dayBox.getValue()+"/"+monthBox.getValue()+"/"+yearBox.getValue());
-			App.userContact.setGender(genderBox.getValue());
-			if(Main.app.signup(App.userContact)) {
+			Main.app.userContact.setName(name);
+			Main.app.userContact.setEmail(email);
+			Main.app.userContact.setPassword(password);
+			//Main.app.userContact.setDate(dayBox.getValue()+"/"+monthBox.getValue()+"/"+yearBox.getValue());
+			Main.app.userContact.setGender(genderBox.getValue());
+			if(Main.app.signup(Main.app.userContact)) {
 				try {
 					Parent root = FXMLLoader.load(getClass().getResource("InternalScene.fxml"));
 					Scene scene = new Scene(root);
