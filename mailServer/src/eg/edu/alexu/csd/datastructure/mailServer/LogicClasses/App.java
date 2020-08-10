@@ -4,7 +4,7 @@ import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
 import java.io.*;
 import java.util.Scanner;
 public class App implements IApp {
-	public static Contact userContact= new Contact();
+	public Contact userContact= new Contact();
 	public SLinkedList mails=new SLinkedList();
 	@Override
 	public boolean signin(String email, String password) {

@@ -3,6 +3,7 @@ package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.text.ParseException;
 import java.util.ResourceBundle;
 import javafx.fxml.*;
@@ -36,14 +37,15 @@ public class SignUpController implements Initializable{
 			message += "- Email has invald form.\n        Please use letters as:\n            a-z A-Z 0-9 @ .\n";
 		String password = txtPassword.getText();
 		if(password.isEmpty())
-			message += "- Password Field is empty.\n        Please enter a password\n";
-		//if(!isValidDate(yearBox.getValue(),monthBox.getValue(),dayBox.getValue()))
-			//message += "- The selected birthday is not a true date.\n";
+			message += "- Password field is empty.\n        Please enter a password\n";
+		LocalDate date = birthdayPicker.getValue();
+		if(date == null)
+			message += "- Date field is empty.\n        Please select a date\n";
 		if(message.isEmpty()) {
 			Main.app.userContact.setName(name);
 			Main.app.userContact.setEmail(email);
 			Main.app.userContact.setPassword(password);
-			//Main.app.userContact.setDate(dayBox.getValue()+"/"+monthBox.getValue()+"/"+yearBox.getValue());
+			Main.app.userContact.setDate(date.toString());
 			Main.app.userContact.setGender(genderBox.getValue());
 			if(Main.app.signup(Main.app.userContact)) {
 				try {
