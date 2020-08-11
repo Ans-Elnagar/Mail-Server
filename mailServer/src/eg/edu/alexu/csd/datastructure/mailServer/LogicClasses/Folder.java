@@ -9,7 +9,7 @@ public class Folder implements IFolder {
 	}
 	public void setFolder(String current) {
 		folder=current;
-		path = "Users/"+App.userContact.getEmail()+current;
+		path = "Users/"+current;
 	}
 	public String getPath() {
 		return path;

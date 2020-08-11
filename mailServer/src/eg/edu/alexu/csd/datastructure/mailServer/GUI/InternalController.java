@@ -26,11 +26,11 @@ public class InternalController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initialProfileImage(profileImage);
-		name.setText(App.userContact.getName());
+		name.setText(Main.app.user.getName());
 	}
 	 
 	static void initialProfileImage(Circle profile) {
-		File file =new File("Users//"+App.userContact.getEmail()+"//Profile.jpg");
+		File file =new File("Users//"+Main.app.user.getEmail()+"//Profile.jpg");
 		Image image = new Image(file.toURI().toString(),false);
 		profile.setFill(new ImagePattern(image));
 	}

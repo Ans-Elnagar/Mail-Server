@@ -42,12 +42,12 @@ public class SignUpController implements Initializable{
 		if(date == null)
 			message += "- Date field is empty.\n        Please select a date\n";
 		if(message.isEmpty()) {
-			Main.app.userContact.setName(name);
-			Main.app.userContact.setEmail(email);
-			Main.app.userContact.setPassword(password);
-			Main.app.userContact.setDate(date.toString());
-			Main.app.userContact.setGender(genderBox.getValue());
-			if(Main.app.signup(Main.app.userContact)) {
+			Main.app.user.setName(name);
+			Main.app.user.setEmail(email);
+			Main.app.user.setPassword(password);
+			Main.app.user.setDate(date.toString());
+			Main.app.user.setGender(genderBox.getValue());
+			if(Main.app.signup(Main.app.user)) {
 				try {
 					Parent root = FXMLLoader.load(getClass().getResource("InternalScene.fxml"));
 					Scene scene = new Scene(root);

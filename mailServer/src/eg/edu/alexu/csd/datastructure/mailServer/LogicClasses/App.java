@@ -4,7 +4,7 @@ import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
 import java.io.*;
 import java.util.Scanner;
 public class App implements IApp {
-	public Contact userContact= new Contact();
+	public Contact user= new Contact();
 	public SLinkedList mails=new SLinkedList();
 	@Override
 	public boolean signin(String email, String password) {
@@ -18,7 +18,7 @@ public class App implements IApp {
 				if(email.equals(currentEmail)) {
 					if(password.equals(currentPassword)) {
 						//load contact data from the his user file into contact object
-						FileTools.setContactInfo(currentEmail,userContact);
+						FileTools.setContactInfo(currentEmail,user);
 						return true;
 					}
 					else

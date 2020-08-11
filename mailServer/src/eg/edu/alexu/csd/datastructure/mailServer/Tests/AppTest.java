@@ -31,7 +31,7 @@ class AppTest {
 	void SignIn() {
 		App f=new App();
 		f.signin("fdgdf@ysfl.com","44454564");
-		assertEquals("44454564",App.userContact.getPassword());
+		assertEquals("44454564",App.user.getPassword());
 	}
 	@Test 
 	void composeRight() {
