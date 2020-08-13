@@ -20,7 +20,7 @@ import javafx.stage.*;
 public class InternalController implements Initializable {
 	private Folder currentFolder=new Folder("Inbox");
 	private SORTING sort=SORTING.NEWEST;
-	//private Filter filter=new Filter();
+	private Filter filter=new Filter();
 	private int page=1;
 	@FXML
 	Label pageLabel;
