@@ -181,6 +181,8 @@ public class FileTools {
 		try(Scanner in=new Scanner(folder.getPath()+"/indexFile.txt")){
 			while(in.hasNext()) {
 				String [] line=in.nextLine().split(",");
+				if(line.length<2)
+					break;
 				Mail mail=new Mail();
 				mail.setSubject(line[0]);
 				mail.setTime(Long.parseLong(line[1]));

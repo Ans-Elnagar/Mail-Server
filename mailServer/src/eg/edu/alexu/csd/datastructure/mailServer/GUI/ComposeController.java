@@ -3,26 +3,19 @@ package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class ProfileController implements Initializable {
+public class ComposeController implements Initializable {
 	@FXML
-		private  BorderPane boarderPane;
-		Stage stage;
+	private  BorderPane boarderPane;
+	Stage stage;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	
-	@FXML 
-	public void saveChanges() {
 		
 	}
 	
@@ -48,5 +41,4 @@ public class ProfileController implements Initializable {
 	public void minimizeClicked() {
 		((Stage)boarderPane.getScene().getWindow()).setIconified(true);
 	}
-
 }

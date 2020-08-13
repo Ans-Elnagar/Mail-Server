@@ -1,13 +1,8 @@
 package eg.edu.alexu.csd.datastructure.mailServer.Tests;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.App;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Contact;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.FileTools;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Mail;
 
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.*;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
-
 import org.junit.jupiter.api.Test;
 
 class AppTest {
@@ -31,7 +26,7 @@ class AppTest {
 	void SignIn() {
 		App f=new App();
 		f.signin("fdgdf@ysfl.com","44454564");
-		assertEquals("44454564",App.user.getPassword());
+		assertEquals("44454564",f.user.getPassword());
 	}
 	@Test 
 	void composeRight() {
