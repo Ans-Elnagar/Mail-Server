@@ -72,8 +72,8 @@ public class Filter implements IFilter {
 			mail = (Mail)mails.get(i);
 			if( isInTime(mail.getTime(),fromTime, currentTime) ) {
 				if( (hasAttachmentsOnly && mail.attachments.size() > 0) || ( ! hasAttachmentsOnly ) ) {
-					if(mail.getSender().contains(sender)) {
-						if(mail.getSubject().contains(subject)) {
+					if(sender!=null&&mail.getSender().contains(sender)) {
+						if(subject!=null&&mail.getSubject().contains(subject)) {
 							continue;
 						}
 					}

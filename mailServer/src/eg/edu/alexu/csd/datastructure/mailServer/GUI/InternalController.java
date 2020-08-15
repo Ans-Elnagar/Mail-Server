@@ -1,15 +1,18 @@
 package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.IFilter;
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
@@ -18,9 +21,9 @@ import javafx.stage.*;
 
 
 public class InternalController implements Initializable {
-	private Folder currentFolder=new Folder("Inbox");
-	private SORTING sort=SORTING.NEWEST;
-	private Filter filter=new Filter();
+	private Folder currentFolder;
+	private SORTING sort;
+	private Filter filter;
 	private int page=1;
 	@FXML
 	Label pageLabel;
@@ -29,34 +32,70 @@ public class InternalController implements Initializable {
 	@FXML
 	private TableView<Mail> tableView;
 	@FXML
-	private TableColumn<Mail,String> dateView;
+	private TableColumn<Mail,String> dateColumn;
 	@FXML
-	private TableColumn<Mail,String> importantView;
+	private TableColumn<Mail,String> importantColumn;
 	@FXML
-	private TableColumn<Mail,String> fromView;
+	private TableColumn<Mail,String> fromColumn;
 	@FXML
-	private TableColumn<Mail,String> subjectView;
+	private TableColumn<Mail,String> subjectColumn;
 	@FXML
-	private TableColumn<Mail,String> mailView;
+	private TableColumn<Mail,String> mailColumn;
 	@FXML 
 	private Circle profileImage;
 	@FXML
 	private Label name;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		currentFolder=new Folder(Main.app.user.getEmail()+'/',"Inbox");
+		sort=SORTING.NEWEST;
+		filter=new Filter();
+		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		initialProfileImage(profileImage);
 		name.setText(Main.app.user.getName());
 		folderName.setText("Inbox");
+		viewInTable(currentFolder,new Filter(),SORTING.NEWEST,page);
+		setColumns();
+	}
+	
+	
+	 void setColumns() {
+		dateColumn.setCellValueFactory(cellData->{
+			Mail mail=cellData.getValue();
+			if(mail==null) return null;
+			Date date=new Date(mail.getTime());
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+			return new SimpleStringProperty(dateFormat.format(date));
+		});
 		
-		inboxSelected();
+		importantColumn.setCellValueFactory(cellData->{
+			Mail mail=cellData.getValue();
+			if(mail==null) return null;
+			 return new SimpleStringProperty(Integer.toString(mail.getImportance()));
+		});
+		
+		fromColumn.setCellValueFactory(new PropertyValueFactory<>("sender"));
+		
+		subjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+		
+		mailColumn.setCellValueFactory(cellData->{
+			Mail mail=cellData.getValue();
+			if(mail==null) return null;
+			String body=mail.getMailBody().replace("/n"," ");
+			return new SimpleStringProperty(body);
+		});
 		
 	}
-	 
+	
+	
 	static void initialProfileImage(Circle profile) {
 		File file =new File("Users//"+Main.app.user.getEmail()+"//Profile.jpg");
 		Image image = new Image(file.toURI().toString(),false);
 		profile.setFill(new ImagePattern(image));
 	}
+	
+	
+	
 	@FXML
 	 void editProfile() {
 		try {
@@ -75,6 +114,10 @@ public class InternalController implements Initializable {
 		name.setText(Main.app.user.getName());
 	}
 	
+	
+	
+	
+	
 	@FXML 
 	public void composeAction() {
 		try {
@@ -90,30 +133,37 @@ public class InternalController implements Initializable {
 		}
 	}
 	
+	
+	
 	@FXML
 	public void openAction() {
 		//TODO open
 	}
+	
+	
+	
 	@FXML
 	public void deleteAction() {
 		//TODO : handle delete if it's trash and move to trash otherwise
 	}
+	
+	
+	
 	@FXML
 	public void refreshAction() {
 		//TODO filter
-		viewInTable(currentFolder,null,sort,1);
+		viewInTable(currentFolder,filter,sort,1);
 	}
 	
-	// handling 
-	//@FXML
-	public static  void addingMailsToTable(Mail[] mails) {
-		
-	}
+	
 	
 	@FXML
 	public void nextPageAction() {
 		//TODO
 	}
+	
+	
+	
 	@FXML
 	public void lastPageAction() {
 		//TODO
@@ -129,54 +179,65 @@ public class InternalController implements Initializable {
 		}
 		
 	}
-	static void viewInTable(Folder folder,IFilter filter,SORTING sorting,int page) {
+	
+
+	
+	static ObservableList<Mail> getMails(Mail[] mailsArray){
+		ObservableList<Mail> mails=FXCollections.observableArrayList();
+		for(int i=9;i>=0;i--) {
+			if(mailsArray[i]==null) continue;
+			mails.add(mailsArray[i]);
+		}
+		return mails;
+	}
+	
+	
+	
+	 void viewInTable(Folder folder,IFilter filter,SORTING sorting,int page) {
 		Main.app.setViewingOptions(folder, filter, new Sort(sorting));
 		Mail[] mails=(Mail[]) Main.app.listEmails(page);
-		addingMailsToTable(mails);
+		tableView.getItems().clear();
+		if(Main.app.mails.size()==0) return;
+		tableView.setItems(getMails(mails));
 	}
+	
+	
+	public void folderSelected(String folder) {
+		if(!currentFolder.getFolder().equals(folder)) {
+			page=1;
+			currentFolder.setFolder(Main.app.user.getEmail()+'/',folder);
+			folderName.setText(folder);
+			//TODO  : edit to add filtering 
+			viewInTable(currentFolder,new Filter(),SORTING.NEWEST,page);
+		}
+	}
+	
 	// handling choosing folders
 	@FXML
 	public void inboxSelected() {
-		if(!currentFolder.getFolder().equals("Inbox")) {
-			page=1;
-			currentFolder.setFolder(Main.app.user+"/Inbox");
-			folderName.setText("Inbox");
-			//TODO  : edit to add filtering 
-			viewInTable(currentFolder,null,SORTING.NEWEST,page);
-		}
+		folderSelected("Index");
 	}
 	@FXML
 	public void sentSelected() {
-		if(!currentFolder.getFolder().equals("Sent")) {
-			page=1;
-			currentFolder.setFolder(Main.app.user+"/Sent");
-			folderName.setText("Sent");
-			viewInTable(currentFolder,null,SORTING.NEWEST,page);
-		}
+		folderSelected("Sent");
 	}
 	@FXML
 	public void trashSelected() {
-		if(!currentFolder.getFolder().equals("Trash")) {
-			page=1;
-			currentFolder.setFolder(Main.app.user+"/Trash");
-			folderName.setText("Trash");
-			viewInTable(currentFolder,null,SORTING.NEWEST,page);
-		}
+		folderSelected("Trash");
 	}
 	@FXML
 	public void draftSelected() {
-		if(!currentFolder.getFolder().equals("Draft")) {
-			page=1;
-			currentFolder.setFolder(Main.app.user+"/Draft");
-			folderName.setText("Draft");
-			viewInTable(currentFolder,null,SORTING.NEWEST,page);
-		}
+		folderSelected("Draft");
 	}
+	
+	
 	
 	static int countPages() {
 		int size=Main.app.mails.size();
 		return ((size%10==0)?0:1)+(size/10);
 	}
+	
+	
 	
 	//handling moving the stage
 	double x,y;

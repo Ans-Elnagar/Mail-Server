@@ -18,7 +18,7 @@ public class Contact implements IContact {
 		this.name = name;
 	}
 	public String getEmail() {
-		return email;
+		return email.toString();
 	}
 	public void setEmail(String email) {
 		this.email = email;
