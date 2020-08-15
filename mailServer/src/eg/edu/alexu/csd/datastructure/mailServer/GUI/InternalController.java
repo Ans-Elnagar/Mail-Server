@@ -215,7 +215,7 @@ public class InternalController implements Initializable {
 	// handling choosing folders
 	@FXML
 	public void inboxSelected() {
-		folderSelected("Index");
+		folderSelected("Inbox");
 	}
 	@FXML
 	public void sentSelected() {

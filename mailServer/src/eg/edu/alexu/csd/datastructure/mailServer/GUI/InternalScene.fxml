@@ -208,7 +208,7 @@
                   </Label>
                   <CheckBox layoutX="493.0" layoutY="157.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" />
                </children></AnchorPane>
-            <TableView fx:id="tableView" fixedCellSize="28.5" maxHeight="372.0" maxWidth="754.0" pickOnBounds="false" prefHeight="364.0" prefWidth="745.0">
+            <TableView fx:id="tableView" fixedCellSize="30.5" maxHeight="372.0" maxWidth="754.0" pickOnBounds="false" prefHeight="364.0" prefWidth="745.0">
               <columns>
                   <TableColumn fx:id="dateColumn" editable="false" maxWidth="137.60005795955658" prefWidth="137.60005795955658" resizable="false" sortable="false" text="Date" />
                   <TableColumn fx:id="importantColumn" editable="false" maxWidth="75.0" prefWidth="39.199951171875" resizable="false" sortable="false" text="Importrance" />
