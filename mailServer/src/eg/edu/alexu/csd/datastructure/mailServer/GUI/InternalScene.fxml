@@ -170,8 +170,11 @@
                         <Font name="Arial Bold Italic" size="30.0" />
                      </font>
                   </Label>
-                  <ChoiceBox layoutX="14.0" layoutY="125.0" prefWidth="150.0" />
-                  <Button contentDisplay="CENTER" layoutX="194.0" layoutY="125.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="26.0" prefWidth="60.0" style="-fx-background-color: #57606f;" text="Sort" textFill="WHITE">
+                  <ChoiceBox fx:id="sortTypeBox" layoutX="14.0" layoutY="125.0" prefHeight="26.0" prefWidth="100.0" />
+                  <ChoiceBox fx:id="filterBox" layoutX="586.0" layoutY="125.0" prefWidth="150.0" />
+                  <TextField layoutX="223.0" layoutY="84.0" prefHeight="26.0" prefWidth="149.0" promptText="Search" />
+                  <ChoiceBox fx:id="searchBox" layoutX="373.0" layoutY="84.0" prefHeight="26.0" prefWidth="80.0" />
+                  <Button contentDisplay="CENTER" layoutX="453.0" layoutY="84.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="28.0" prefWidth="73.0" style="-fx-background-color: #57606f;" text="Search" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -179,26 +182,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <ChoiceBox layoutX="493.0" layoutY="125.0" prefWidth="150.0" />
-                  <Button contentDisplay="CENTER" layoutX="680.0" layoutY="125.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="26.0" prefWidth="60.0" style="-fx-background-color: #57606f;" text="Filter" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <TextField layoutX="228.0" layoutY="84.0" promptText="Search" />
-                  <ChoiceBox layoutX="377.0" layoutY="84.0" prefHeight="26.0" prefWidth="65.0" />
-                  <Button contentDisplay="CENTER" layoutX="443.0" layoutY="84.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="28.0" prefWidth="73.0" style="-fx-background-color: #57606f;" text="Search" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Label layoutX="521.0" layoutY="155.0" text="Has attachments only">
+                  <Label layoutX="607.0" layoutY="151.0" text="Has attachments only">
                      <padding>
                         <Insets top="5.0" />
                      </padding>
@@ -206,7 +190,18 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <CheckBox layoutX="493.0" layoutY="157.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" />
+                  <CheckBox layoutX="586.0" layoutY="155.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" />
+                  <ChoiceBox fx:id="sortOrderBox" layoutX="114.0" layoutY="125.0" prefHeight="26.0" prefWidth="78.0" />
+                  <Label layoutX="64.0" layoutY="88.0" text="Set Sorting">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="627.0" layoutY="87.0" text="Set Filter">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
             <TableView fx:id="tableView" fixedCellSize="30.5" maxHeight="372.0" maxWidth="754.0" pickOnBounds="false" prefHeight="364.0" prefWidth="745.0">
               <columns>
@@ -235,16 +230,16 @@
                   </Button>
                   <AnchorPane prefHeight="60.0" prefWidth="140.0" translateX="-157.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="140.0">
+                        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="142.0">
                            <children>
-                              <Label fx:id="pageLabel" text="Hello World!">
+                              <Label fx:id="pageLabel">
                                  <font>
                                     <Font name="System Bold Italic" size="15.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="77.0" layoutY="23.0" onMouseClicked="#nextPageAction" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="74.0" layoutY="23.0" onMouseClicked="#nextPageAction" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../../../../../../icons/nextPage.png" />
                            </image>
@@ -252,7 +247,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="32.0" layoutY="23.0" onMouseClicked="#lastPageAction" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="43.0" layoutY="23.0" onMouseClicked="#lastPageAction" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../../../../../../icons/lastPage.png" />
                            </image>

@@ -74,9 +74,9 @@ public class Sort implements ISort {
 		}
 		private int compNum(long num1,long num2) {
 			if(num1>num2)
-				return 1;
-			else if(num1<num2)
 				return -1;
+			else if(num1<num2)
+				return 1;
 			return 0;
 		}
 		private int compString(String str1,String str2) {
@@ -89,5 +89,39 @@ public class Sort implements ISort {
 			}
 			return compNum(str1.length(),str2.length());
 		}
+	}
+	
+	public static void main(String[] args) {
+		 SLinkedList mails = new SLinkedList();
+		 //2288'4' 1580'1' 2545'6' 1886'2' 2333'5' 2815'7' 1950'3' 
+		 String[] names = {"ahmed_mohamed@gmail.com","baraah@yahoo.com","esraa_mahmoud@hotmail.com","ans_gomaa@hmail.com", 
+				  "seif_gneedy@hotmail.com","zAmericanEnglish@hotmail.com","zezoElaraghi@A2OJ.com"};
+		 //n=7
+		 String[] subjects= {"welcome to egypt","fuck egypt","arab countries is good",
+				 "hello world","five Pistols","s*x education","just fuck mezo"};
+		 long[] times= {15,2,3,40,25,60,75};
+		 for(int i=0;i<names.length;i++) {
+			 Mail mail=new Mail();
+			 mail.setTime(times[i]);
+			 SLinkedList attachs = new SLinkedList();
+			 LinkedQueue receive = new LinkedQueue();
+			 for(int j=i;j<names.length;j++) {
+				 attachs.add(names[j]);
+				 receive.enqueue(names[j]);
+			 }
+			 mail.receivers=receive;
+			 mail.setAttachments(attachs);
+			 mail.setSender(names[i]);
+			 mail.setSubject(subjects[i]);
+			 mail.setImportance((i%2==0)?0:i);
+			 mails.add(mail);
+		 }
+	     Sort sort = new Sort(SORTING.NEWEST);
+	     sort.quickSort(mails);
+	     for(int i=0;i<mails.size();i++) {
+	    	 Mail mail = (Mail)mails.get(i);
+	    	 System.out.println(mail.getSubject()+"\t"+mail.getSender()+"\t"+mail.getImportance()+
+	    			 "\t"+mail.attachments.size());
+	     }
 	}
 }

@@ -5,11 +5,11 @@ import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.IFilter;
 public class Filter implements IFilter {
 	
 	// when choosing display mails from :
-	public static final int ALL = -1;
-	public static final int ONE_HOUR = 0;
-	public static final int ONE_DAY = 1;
-	public static final int ONE_WEEK = 2;
-	public static final int ONE_MONTH = 3;
+	public final int ALL = -1;
+	public final int ONE_HOUR = 0;
+	public final int ONE_DAY = 1;
+	public final int ONE_WEEK = 2;
+	public final int ONE_MONTH = 3;
 	public static final int[] timeDifferences = {3600, 86400, 604800, 2592000};
 	private int fromTime = -1;
 	private boolean hasAttachmentsOnly;

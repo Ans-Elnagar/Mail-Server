@@ -24,11 +24,15 @@ public class InternalController implements Initializable {
 	private Folder currentFolder;
 	private SORTING sort;
 	private Filter filter;
-	private int page=1;
+	private boolean hasAttachsOnly=false;
+	private int page;
+	@FXML
+	private Label name;
 	@FXML
 	Label pageLabel;
 	@FXML
 	Label folderName;
+	
 	@FXML
 	private TableView<Mail> tableView;
 	@FXML
@@ -41,25 +45,103 @@ public class InternalController implements Initializable {
 	private TableColumn<Mail,String> subjectColumn;
 	@FXML
 	private TableColumn<Mail,String> mailColumn;
+	
+	@FXML
+	ChoiceBox<String> sortTypeBox;
+	@FXML
+	ChoiceBox<String> sortOrderBox;
+	@FXML
+	ChoiceBox<String> filterBox;
+	@FXML
+	ChoiceBox<String> searchBox;
+	
 	@FXML 
 	private Circle profileImage;
-	@FXML
-	private Label name;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		page=1;
 		currentFolder=new Folder(Main.app.user.getEmail()+'/',"Inbox");
 		sort=SORTING.NEWEST;
 		filter=new Filter();
-		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		initialProfileImage(profileImage);
 		name.setText(Main.app.user.getName());
 		folderName.setText("Inbox");
-		viewInTable(currentFolder,new Filter(),SORTING.NEWEST,page);
-		setColumns();
+		pageLabel.setText(page+" from "+countPages());
+		viewInTable(currentFolder,filter,sort,page);
+		setTableColumns();
+		setChoiceBoxes();
+	}
+	
+	void setChoiceBoxes() {
+		
+		sortTypeBox.getItems().addAll("Date","Subject","Importance","Sender","# of attachments");
+		sortTypeBox.setValue("Date");
+		sortTypeBox.getSelectionModel().selectedItemProperty().addListener((V,oldValue,newValue)-> applySortBoxes(newValue,sortOrderBox.getValue()));
+		
+		sortOrderBox.getItems().addAll("Descending","Ascending");
+		sortOrderBox.setValue("Descending");
+		sortOrderBox.getSelectionModel().selectedItemProperty().addListener((V,oldValue,newValue)-> applySortBoxes(sortTypeBox.getValue(),newValue));
+
+		filterBox.getItems().addAll("All time","Last hour","Last day","Last week","Last month");
+		filterBox.setValue("All time");
+		filterBox.getSelectionModel().selectedItemProperty().addListener((V,oldValue,newValue)-> applyFilterBox(newValue));
+		
+		searchBox.getItems().addAll("Subject","Sender");
+		searchBox.setValue("Subject");
+		
 	}
 	
 	
-	 void setColumns() {
+	void applySortBoxes(String type,String order) {
+		if(order.equals("Ascending")) {
+			if(type.equals("Date"))
+				sort=SORTING.OLDEST;
+			else if(type.equals("Subject"))
+				sort=SORTING.ASCENDING_SUBJECT;
+			else if(type.equals("Importance"))
+				sort=SORTING.ASCENDING_IMPORTANCE;
+			else if(type.equals("Sender"))
+				sort=SORTING.ASCENDING_SENDER;
+			else
+				sort=SORTING.ASCENDING_N_ATTACH;
+		}
+		else {
+			if(type.equals("Date"))
+				sort=SORTING.NEWEST;
+			else if(type.equals("Subject"))
+				sort=SORTING.DESCENDING_SUBJECT;
+			else if(type.equals("Importance"))
+				sort=SORTING.DESCENDING_IMPORTANCE;
+			else if(type.equals("Sender"))
+				sort=SORTING.DESCENDING_SENDER;
+			else
+				sort=SORTING.DESCENDING_N_ATTACH;
+		}
+		
+		page=1;
+		viewInTable(currentFolder,filter,sort,page);
+	}
+	
+	
+	void applyFilterBox(String newFilter) {
+		if(newFilter.equals("All time"))
+			filter.setFromTime(filter.ALL);
+		else if(newFilter.equals("Last hour"))
+			filter.setFromTime(filter.ONE_HOUR);
+		else if(newFilter.equals("Last day"))
+			filter.setFromTime(filter.ONE_DAY);
+		else if(newFilter.equals("Last week"))
+			filter.setFromTime(filter.ONE_WEEK);
+		else
+			filter.setFromTime(filter.ONE_MONTH);
+		
+		page=1;
+		viewInTable(currentFolder,filter,sort,page);
+	}
+	
+	
+	 void setTableColumns() {
+		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		dateColumn.setCellValueFactory(cellData->{
 			Mail mail=cellData.getValue();
 			if(mail==null) return null;
@@ -151,7 +233,6 @@ public class InternalController implements Initializable {
 	
 	@FXML
 	public void refreshAction() {
-		//TODO filter
 		viewInTable(currentFolder,filter,sort,1);
 	}
 	
@@ -159,15 +240,28 @@ public class InternalController implements Initializable {
 	
 	@FXML
 	public void nextPageAction() {
-		//TODO
+		if(page+1<=countPages()) {
+			page++;
+			viewInTable(currentFolder,filter,sort,page);
+		}
 	}
 	
 	
 	
 	@FXML
 	public void lastPageAction() {
-		//TODO
+		if(page-1>0) {
+			page--;
+			viewInTable(currentFolder,filter,sort,page);
+		}
 	}
+	
+	
+	static int countPages() {
+		int size=Main.app.mails.size();
+		return ((size%10==0)?0:1)+(size/10);
+	}
+	
 	
 	@FXML
 	public void signOutAction() {
@@ -184,8 +278,7 @@ public class InternalController implements Initializable {
 	
 	static ObservableList<Mail> getMails(Mail[] mailsArray){
 		ObservableList<Mail> mails=FXCollections.observableArrayList();
-		for(int i=9;i>=0;i--) {
-			if(mailsArray[i]==null) continue;
+		for(int i=0;i<10&&mailsArray[i]!=null;i++) {
 			mails.add(mailsArray[i]);
 		}
 		return mails;
@@ -198,17 +291,26 @@ public class InternalController implements Initializable {
 		Mail[] mails=(Mail[]) Main.app.listEmails(page);
 		tableView.getItems().clear();
 		if(Main.app.mails.size()==0) return;
+		pageLabel.setText(page+" from "+countPages());
 		tableView.setItems(getMails(mails));
 	}
 	
 	
+	 
 	public void folderSelected(String folder) {
 		if(!currentFolder.getFolder().equals(folder)) {
 			page=1;
 			currentFolder.setFolder(Main.app.user.getEmail()+'/',folder);
 			folderName.setText(folder);
-			//TODO  : edit to add filtering 
-			viewInTable(currentFolder,new Filter(),SORTING.NEWEST,page);
+			
+			sortTypeBox.getSelectionModel().select(0);
+			sortOrderBox.getSelectionModel().select(0);
+			filterBox.getSelectionModel().select(0);
+			searchBox.getSelectionModel().select(0);
+
+			filter=new Filter();
+			sort=SORTING.NEWEST;
+			viewInTable(currentFolder,filter,sort,page);
 		}
 	}
 	
@@ -228,13 +330,6 @@ public class InternalController implements Initializable {
 	@FXML
 	public void draftSelected() {
 		folderSelected("Draft");
-	}
-	
-	
-	
-	static int countPages() {
-		int size=Main.app.mails.size();
-		return ((size%10==0)?0:1)+(size/10);
 	}
 	
 	

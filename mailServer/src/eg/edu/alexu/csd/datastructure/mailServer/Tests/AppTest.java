@@ -32,13 +32,13 @@ class AppTest {
 	void composeRight() {
 		App f=new App();
 		Mail mail = new Mail();
-		mail.receivers.enqueue("seifgneedy@fmail.com");
+		mail.receivers.enqueue("ans@fmail.com");
 //		mail.receivers.enqueue("seifgn2@gldl.com");
 //		mail.receivers.enqueue("fdgdf@ysfl.com");
-		mail.setMailBody("we\nwill\ngo\nand\nfuck\nourselvessflsdjfklsdjfklsjdklfjskldjfklasjdklfjklasdjflkjdsklfjkasdljf");
+		mail.setMailBody("kjn/njknjknjknjknjknnkj/n");
 		mail.setTime(System.currentTimeMillis());
-		mail.setSubject("hello world");
-		mail.setSender("ans@fmail.com");
+		mail.setSubject("skkkfsd");
+		mail.setSender("seifgneedy@fmail.com");
 		//mail.attachments.add(new File("C:/Users/seifg/Desktop/احمد خالد توفيق/KAT2018/KAT43.pdf"));
 		assertTrue(f.compose(mail));
 	}
