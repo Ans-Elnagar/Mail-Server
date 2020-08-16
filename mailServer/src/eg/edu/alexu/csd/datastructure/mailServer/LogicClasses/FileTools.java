@@ -178,8 +178,7 @@ public class FileTools {
 	}
 	public static SLinkedList loadMailsToList(Folder folder) {
 		SLinkedList mails=new SLinkedList();
-		try{
-			Scanner in=new Scanner(new File(folder.getPath()+"/indexFile.txt"));
+		try(Scanner in=new Scanner(new File(folder.getPath()+"/indexFile.txt"))){
 			while(in.hasNext()) {
 				String [] line=in.nextLine().split(",");
 				if(line.length<2)
@@ -221,16 +220,6 @@ public class FileTools {
 		}
 		return result;
 	}
-//	public static void main (String [] args ) {
-//		File houseMd=new File("House MD");
-//		FileTools.createFolder(houseMd);
-//		for(int i=1;i<=8;i++)
-//			FileTools.createFolder(new File(houseMd.getPath()+"/S "+i));
-//		for(File file:houseMd.listFiles()) {
-//			for(int i=1;i<=23;i++)
-//				FileTools.createFolder(new File(file.getPath()+"/ep "+i));
-//		}
-//	}
 }
 
 
