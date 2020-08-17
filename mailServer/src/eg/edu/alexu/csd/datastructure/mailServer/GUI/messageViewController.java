@@ -3,6 +3,7 @@ package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Mail;
 import javafx.fxml.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -12,15 +13,12 @@ public class messageViewController implements Initializable {
 	@FXML
 	private  BorderPane boarderPane;
 	Stage stage;
+	Mail mail;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		
+		mail=Main.currentMail;
 	}
-	
-	
-	
-	
 	
 	
 	

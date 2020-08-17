@@ -2,7 +2,6 @@ package eg.edu.alexu.csd.datastructure.mailServer.Tests;
 
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.*;
 import static org.junit.jupiter.api.Assertions.*;
-import java.io.File;
 import org.junit.jupiter.api.Test;
 
 class AppTest {
@@ -37,7 +36,7 @@ class AppTest {
 //		mail.receivers.enqueue("fdgdf@ysfl.com");
 		mail.setMailBody("kjn/njknjknjknjknjknnkj/n");
 		mail.setTime(System.currentTimeMillis());
-		mail.setSubject("skkkfsd");
+		mail.setSubject("zkkkfsd");
 		mail.setSender("seifgneedy@fmail.com");
 		//mail.attachments.add(new File("C:/Users/seifg/Desktop/احمد خالد توفيق/KAT2018/KAT43.pdf"));
 		assertTrue(f.compose(mail));

@@ -24,14 +24,17 @@ public class InternalController implements Initializable {
 	private Folder currentFolder;
 	private SORTING sort;
 	private Filter filter;
-	private boolean hasAttachsOnly=false;
 	private int page;
+	
 	@FXML
 	private Label name;
 	@FXML
 	Label pageLabel;
 	@FXML
 	Label folderName;
+	
+	@FXML
+	TextField searchText;
 	
 	@FXML
 	private TableView<Mail> tableView;
@@ -47,16 +50,20 @@ public class InternalController implements Initializable {
 	private TableColumn<Mail,String> mailColumn;
 	
 	@FXML
-	ChoiceBox<String> sortTypeBox;
+	private ChoiceBox<String> sortTypeBox;
 	@FXML
-	ChoiceBox<String> sortOrderBox;
+	private ChoiceBox<String> sortOrderBox;
 	@FXML
-	ChoiceBox<String> filterBox;
+	private ChoiceBox<String> filterBox;
 	@FXML
-	ChoiceBox<String> searchBox;
+	private ChoiceBox<String> searchBox;
+	
+	@FXML
+	private CheckBox hasAttachmentsOnly;
 	
 	@FXML 
 	private Circle profileImage;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		page=1;
@@ -70,7 +77,18 @@ public class InternalController implements Initializable {
 		viewInTable(currentFolder,filter,sort,page);
 		setTableColumns();
 		setChoiceBoxes();
+		setAttachments();
 	}
+	
+	
+	void setAttachments() {
+		hasAttachmentsOnly.selectedProperty().addListener((V,oldValue,newValue)->{
+			page=1;
+			filter.setHasAttachmentsOnly(newValue);
+			viewInTable(currentFolder,filter,sort,page);
+		});
+	}
+	
 	
 	void setChoiceBoxes() {
 		
@@ -134,7 +152,7 @@ public class InternalController implements Initializable {
 			filter.setFromTime(filter.ONE_WEEK);
 		else
 			filter.setFromTime(filter.ONE_MONTH);
-		
+
 		page=1;
 		viewInTable(currentFolder,filter,sort,page);
 	}
@@ -197,7 +215,19 @@ public class InternalController implements Initializable {
 	}
 	
 	
-	
+	@FXML
+	void searchAction() {
+		if(searchText.getText().equals(""))
+			Main.popUp.createAlert("Enter your search text.");
+		else {
+			if(searchBox.getValue().equals("Subject"))
+				filter.setSubject(searchText.getText());
+			else
+				filter.setSender(searchText.getText());
+			page=1;
+			viewInTable(currentFolder,filter,sort,page);
+		}
+	}
 	
 	
 	@FXML 
@@ -219,21 +249,50 @@ public class InternalController implements Initializable {
 	
 	@FXML
 	public void openAction() {
-		//TODO open
+		ObservableList<Mail> mails=tableView.getSelectionModel().getSelectedItems();
+		if(mails.size()==1) {
+			try {
+				Main.currentMail=mails.get(0);
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("messageView.fxml"));
+				Parent root=fxmlLoader.load();
+				Stage messageStage = new Stage();
+				messageStage.initModality(Modality.APPLICATION_MODAL);
+				messageStage.setScene(new Scene(root));
+				messageStage.initStyle(StageStyle.UNDECORATED);
+				messageStage.setResizable(false);
+				messageStage.showAndWait();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		else {
+			Main.popUp.createAlert("You should select 1 mail.");
+		}
 	}
 	
 	
 	
 	@FXML
 	public void deleteAction() {
-		//TODO : handle delete if it's trash and move to trash otherwise
+		ObservableList<Mail> mails=tableView.getSelectionModel().getSelectedItems();
+		if(mails.size()==0)
+			Main.popUp.createAlert("You should select at least 1 mail.");
+		else {
+			SLinkedList list=new SLinkedList();
+			for(Mail mail:mails)
+				list.add(mail);
+			Main.app.deleteEmails(list);
+		}
+			
 	}
 	
 	
 	
 	@FXML
 	public void refreshAction() {
-		viewInTable(currentFolder,filter,sort,1);
+		page=1;
+		viewInTable(currentFolder,filter,sort,page);
 	}
 	
 	
@@ -297,6 +356,7 @@ public class InternalController implements Initializable {
 	
 	
 	 
+	// handling choosing folders
 	public void folderSelected(String folder) {
 		if(!currentFolder.getFolder().equals(folder)) {
 			page=1;
@@ -314,7 +374,6 @@ public class InternalController implements Initializable {
 		}
 	}
 	
-	// handling choosing folders
 	@FXML
 	public void inboxSelected() {
 		folderSelected("Inbox");
@@ -356,3 +415,6 @@ public class InternalController implements Initializable {
 		Main.stage.setIconified(true);
 	}
 }
+
+
+
