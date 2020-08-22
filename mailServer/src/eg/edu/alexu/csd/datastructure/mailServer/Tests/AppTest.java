@@ -2,7 +2,6 @@ package eg.edu.alexu.csd.datastructure.mailServer.Tests;
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
@@ -132,6 +131,45 @@ class AppTest {
 		assertEquals(3 , emails.size());
 		
 		filter.setSubject("");
+	}
+	
+	@Test
+	void sortingTest() {
+		SLinkedList emails;
+		Sort sort;
+		emails = prepareEmails();
+		
+		sort = new Sort(SORTING.NEWEST);
+		sort.quickSort(emails);
+		assertTrue("Seif".equals( ((Mail) emails.get(0)).getSender()));
+		
+		sort = new Sort(SORTING.OLDEST);
+		sort.quickSort(emails);
+		assertTrue("Mr. X".equals( ((Mail) emails.get(0)).getSender()));
+		
+		sort = new Sort(SORTING.ASCENDING_SUBJECT);
+		sort.quickSort(emails);
+		assertTrue("Seif".equals( ((Mail) emails.get(0)).getSender()));
+		
+		sort = new Sort(SORTING.DESCENDING_SUBJECT);
+		sort.quickSort(emails);
+		assertTrue("Mr. X".equals( ((Mail) emails.get(0)).getSender()));
+		
+		sort = new Sort(SORTING.ASCENDING_SENDER);
+		sort.quickSort(emails);
+		assertTrue("Ans".equals( ((Mail) emails.get(0)).getSender()));
+		
+		sort = new Sort(SORTING.DESCENDING_SENDER);
+		sort.quickSort(emails);
+		assertTrue("Seif".equals( ((Mail) emails.get(0)).getSender()));
+		
+		sort = new Sort(SORTING.ASCENDING_N_ATTACH);
+		sort.quickSort(emails);
+		assertTrue("Seif".equals( ((Mail) emails.get(0)).getSender()));
+		
+		sort = new Sort(SORTING.DESCENDING_N_ATTACH);
+		sort.quickSort(emails);
+		assertTrue("Mr. X".equals( ((Mail) emails.get(0)).getSender()));
 	}
 //	@Test 
 //	void composeRight() {

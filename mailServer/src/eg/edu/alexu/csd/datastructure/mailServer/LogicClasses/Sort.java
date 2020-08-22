@@ -66,9 +66,9 @@ public class Sort implements ISort {
 				return compString(first.getSender(),second.getSender());
 			if(type==SORTING.DESCENDING_SENDER)
 				return compString(second.getSender(),first.getSender());
-			if(type==SORTING.ASCENDING_N_ATTACH)
-				return compNum(first.attachments.size(),second.attachments.size());
 			if(type==SORTING.DESCENDING_N_ATTACH)
+				return compNum(first.attachments.size(),second.attachments.size());
+			if(type==SORTING.ASCENDING_N_ATTACH)
 				return compNum(second.attachments.size(),first.attachments.size());
 			return 0;
 		}
