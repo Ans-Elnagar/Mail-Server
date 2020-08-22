@@ -1,5 +1,7 @@
 package eg.edu.alexu.csd.datastructure.mailServer.Interfaces;
 
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Folder;
+
 public interface IApp {
 	/**
 	  * Sign in to the application 
@@ -21,7 +23,7 @@ public interface IApp {
 	 * @param filter to apply search, can be null 
 	 * @param sort to apply sort 
 	 */ 
-	public void setViewingOptions(IFolder folder, IFilter filter, ISort sort);
+	public void setViewingOptions(Folder folder, IFilter filter, ISort sort);
 	/** 
 	 * You should use setViewingOptions function first
 	 * @param page to handle paging 

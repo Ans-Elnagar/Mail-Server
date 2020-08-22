@@ -2,19 +2,12 @@ package eg.edu.alexu.csd.datastructure.mailServer.LogicClasses;
 import java.io.File;
 import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.*;
 public class Mail implements IMail {
-	// the folder of the mail 
 	private File mailDir;
-	// sender E-mail
 	private String sender;
-	// list of receivers 
 	public LinkedQueue receivers;
-	// subject of the mail
 	private String subject;
-	// the time this mail received or sent
 	private long time;
-	// the mail body from mailBody.txt
 	private String mailBody;
-	// list of attachments
 	public ILinkedList attachments;
 	private int importance;
 	//constructor
@@ -65,7 +58,6 @@ public class Mail implements IMail {
 		this.attachments = attachments;
 	}
 	public int getImportance() {
-		// TODO Auto-generated method stub
 		return importance;
 	}
 	public void setImportance(int importance) {

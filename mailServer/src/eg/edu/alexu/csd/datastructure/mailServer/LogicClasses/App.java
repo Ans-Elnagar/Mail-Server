@@ -50,8 +50,8 @@ public class App implements IApp {
 	}
 
 	@Override
-	public void setViewingOptions(IFolder folder, IFilter filter, ISort sort) {
-		mails=FileTools.loadMailsToList((Folder) folder);
+	public void setViewingOptions(Folder folder, IFilter filter, ISort sort) {
+		mails=FileTools.loadMailsToList(folder);
 		Filter currentFilter = (Filter) filter;
 		currentFilter.filter(mails);
 		Sort currentSort=(Sort) sort;

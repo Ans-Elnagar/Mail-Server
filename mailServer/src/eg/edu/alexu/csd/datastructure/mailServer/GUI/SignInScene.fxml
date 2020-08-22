@@ -62,7 +62,7 @@
       </VBox>
    </center>
    <top>
-      <AnchorPane prefHeight="26.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane onMouseDragged="#barDragged" onMousePressed="#barPressed" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="154.0" layoutY="6.0" onMouseClicked="#minimizeClicked" pickOnBounds="true" preserveRatio="true">
                <image>

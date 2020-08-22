@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="boarderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.ProfileController">
    <top>
-      <AnchorPane prefHeight="26.0" prefWidth="800.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
+      <AnchorPane onMouseDragged="#barDragged" onMousePressed="#barPressed" prefHeight="26.0" prefWidth="800.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="774.0" layoutY="5.0" onMouseClicked="#closeClicked" pickOnBounds="true" preserveRatio="true">
                <image>

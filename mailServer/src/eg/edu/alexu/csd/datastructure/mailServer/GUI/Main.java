@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 import java.io.File;
 
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.App;
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Mail;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ public class Main extends Application {
 	public static Stage stage;
 	public static App app;
 	public static PopUp popUp = new PopUp();
+	public static Mail currentMail;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Main.stage = primaryStage;

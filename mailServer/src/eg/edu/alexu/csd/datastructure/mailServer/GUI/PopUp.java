@@ -1,10 +1,12 @@
 package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -19,6 +21,9 @@ public class PopUp {
 			controller.setMessage(message);
 			Scene scene = new Scene(root);
 			Stage alertStage = new Stage();
+			File file =new File("icons/Alert.png");
+			Image image = new Image(file.toURI().toString(),false);
+			alertStage.getIcons().add(image);
 			alertStage.initModality(Modality.APPLICATION_MODAL);
 			alertStage.setScene(scene);
 			alertStage.initStyle(StageStyle.UNDECORATED);

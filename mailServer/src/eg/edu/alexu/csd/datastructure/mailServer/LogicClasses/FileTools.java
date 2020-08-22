@@ -178,9 +178,11 @@ public class FileTools {
 	}
 	public static SLinkedList loadMailsToList(Folder folder) {
 		SLinkedList mails=new SLinkedList();
-		try(Scanner in=new Scanner(folder.getPath()+"/indexFile.txt")){
+		try(Scanner in=new Scanner(new File(folder.getPath()+"/indexFile.txt"))){
 			while(in.hasNext()) {
 				String [] line=in.nextLine().split(",");
+				if(line.length<2)
+					break;
 				Mail mail=new Mail();
 				mail.setSubject(line[0]);
 				mail.setTime(Long.parseLong(line[1]));
@@ -198,10 +200,13 @@ public class FileTools {
 				mail.setAttachments(attachs);
 				mail.setImportance(Integer.parseInt(line[i]));
 				mail.setMailBody(readFile(folder.getPath()+"/"+mail.getSubject()+" "+mail.getTime()+"/mailBody.txt"));
-				mail.setMailBody(folder.getFolder());
+				mail.setMailDir(folder.getFolder());
 				mails.add(mail);
 			}
 			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return mails;
 	}

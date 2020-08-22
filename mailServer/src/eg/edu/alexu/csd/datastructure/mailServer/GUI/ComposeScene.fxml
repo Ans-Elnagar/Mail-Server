@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane fx:id="boarderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.ComposeController">
+   <top>
+      <AnchorPane onMouseDragged="#barDragged" onMousePressed="#barPressed" prefHeight="26.0" prefWidth="800.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="775.0" layoutY="5.0" onMouseClicked="#closeClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../icons/close.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="748.0" layoutY="5.0" onMouseClicked="#minimizeClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../icons/minimize.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label layoutX="8.0" layoutY="4.0" text="FMail">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

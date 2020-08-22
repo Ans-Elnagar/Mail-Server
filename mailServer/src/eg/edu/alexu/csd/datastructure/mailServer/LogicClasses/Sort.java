@@ -74,9 +74,9 @@ public class Sort implements ISort {
 		}
 		private int compNum(long num1,long num2) {
 			if(num1>num2)
-				return 1;
-			else if(num1<num2)
 				return -1;
+			else if(num1<num2)
+				return 1;
 			return 0;
 		}
 		private int compString(String str1,String str2) {
