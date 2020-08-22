@@ -1,11 +1,7 @@
 package eg.edu.alexu.csd.datastructure.mailServer.Tests;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.App;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Contact;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.FileTools;
-import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Mail;
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 
 import org.junit.jupiter.api.Test;
@@ -21,7 +17,7 @@ class AppTest {
 		test.setName("Seif");
 		test.setDate("212/55/555");
 		App f=new App();
-		assertTrue(f.signup(test));
+		assertFalse(f.signup(test));
 	}
 	@Test
 	void isAvailableTest() {
@@ -33,20 +29,125 @@ class AppTest {
 		f.signin("fdgdf@ysfl.com","44454564");
 		assertEquals("44454564",f.user.getPassword());
 	}
-	@Test 
-	void composeRight() {
-		App f=new App();
-		Mail mail = new Mail();
-		mail.receivers.enqueue("seifgneedy@Fmail.com");
-		mail.receivers.enqueue("seifgn2@gldl.com");
-		mail.receivers.enqueue("fdgdf@ysfl.com");
-		mail.setMailBody("we\nwill\ngo\nand\nfuck\nourself");
-		mail.setTime(System.currentTimeMillis()/1000);
-		mail.setSubject("hello world");
-		mail.setSender("seifgneedy@gmail.com");
-		mail.attachments.add(new File("C:/Users/seifg/Desktop/احمد خالد توفيق/KAT2018/KAT43.pdf"));
-		assertTrue(f.compose(mail));
+	SLinkedList prepareEmails() {
+		long time = System.currentTimeMillis();
+		SLinkedList emails = new SLinkedList();
+		SLinkedList list;
+		// creating emails
+		Mail mail;
+		
+		mail = new Mail();
+		mail.setTime(time - 1000L * 4000);
+		mail.setAttachments(new SLinkedList());
+		mail.setSender("Seif");
+		mail.setSubject("Completing project");
+		emails.add(mail);
+		
+		mail = new Mail();
+		mail.setTime(time - 1000L * 87000);
+		list = new SLinkedList();
+		list.add(1);
+		mail.setAttachments(list);
+		mail.setSender("Ans");
+		mail.setSubject("Finishing project");
+		emails.add(mail);
+		
+		mail = new Mail();
+		mail.setTime(time - 1000L * 605000);
+		list = new SLinkedList();
+		list.add(1);
+		list.add(2);
+		mail.setAttachments(list);
+		mail.setSender("Samer");
+		mail.setSubject("Playing PUBG");
+		emails.add(mail);
+		
+		mail = new Mail();
+		mail.setTime(time - 1000L * 2600000);
+		list = new SLinkedList();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		mail.setAttachments(list);
+		mail.setSender("Mr. X");
+		mail.setSubject("Please finish the project");
+		emails.add(mail);
+		
+		return emails;
 	}
+	@Test
+	void filterTest() {
+		SLinkedList emails;
+		Filter filter = new Filter();
+		
+		
+		// Testing time
+		
+		emails = prepareEmails();
+		filter.setFromTime(Filter.ALL);
+		filter.filter(emails);
+		assertEquals(4 , emails.size());
+		
+		filter.setFromTime(Filter.ONE_MONTH);
+		filter.filter(emails);
+		assertEquals(3 , emails.size());
+		
+		filter.setFromTime(Filter.ONE_WEEK);
+		filter.filter(emails);
+		assertEquals(2 , emails.size());
+		
+		filter.setFromTime(Filter.ONE_DAY);
+		filter.filter(emails);
+		assertEquals(1 , emails.size());
+		
+		filter.setFromTime(Filter.ONE_HOUR);
+		filter.filter(emails);
+		assertEquals(0 , emails.size());
+		
+		filter.setFromTime(Filter.ALL);
+		
+		// Testing Attachments
+		emails = prepareEmails();
+		
+		filter.setHasAttachmentsOnly(true);
+		filter.filter(emails);
+		assertEquals(3 , emails.size());
+		
+		filter.setHasAttachmentsOnly(false);
+		
+		// Testing Sender
+		
+		emails = prepareEmails();
+		
+		filter.setSender("Ans");
+		filter.filter(emails);
+		
+		filter.setSender("");
+		
+		// Testing Subject 
+		emails = prepareEmails();
+		
+		filter.setSubject("project");
+		filter.filter(emails);
+		assertEquals(3 , emails.size());
+		
+		filter.setSubject("");
+	}
+//	@Test 
+//	void composeRight() {
+//		App f=new App();
+//		Mail mail = new Mail();
+//		mail.receivers.enqueue("seifgneedy@Fmail.com");
+//		mail.receivers.enqueue("seifgn2@gldl.com");
+//		mail.receivers.enqueue("fdgdf@ysfl.com");
+//		mail.setMailBody("we\nwill\ngo\nand\nfuck\nourself");
+//		mail.setTime(System.currentTimeMillis()/1000);
+//		mail.setSubject("hello world");
+//		mail.setSender("seifgneedy@gmail.com");
+//		mail.attachments.add(new File("C:/Users/seifg/Desktop/احمد خالد توفيق/KAT2018/KAT43.pdf"));
+//		assertTrue(f.compose(mail));
+//	}
+	
 	/*@Test 
 	void mailFiles() {
 		Mail mail = new Mail();

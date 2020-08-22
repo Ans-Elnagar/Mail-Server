@@ -56,8 +56,6 @@ public class App implements IApp {
 		currentFilter.filter(mails);
 		Sort currentSort=(Sort) sort;
 		currentSort.quickSort(mails);
-		// TODO Apply filtering on this mails
-		
 	}
 
 	@Override

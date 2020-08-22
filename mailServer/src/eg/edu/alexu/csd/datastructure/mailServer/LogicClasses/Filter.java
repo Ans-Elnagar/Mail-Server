@@ -13,8 +13,8 @@ public class Filter implements IFilter {
 	public static final int[] timeDifferences = {3600, 86400, 604800, 2592000};
 	private int fromTime = -1;
 	private boolean hasAttachmentsOnly;
-	private String sender;
-	private String subject;
+	private String sender = "";
+	private String subject = "";
 	
 	public Filter() {}
 	
@@ -71,7 +71,7 @@ public class Filter implements IFilter {
 		for(int i=0; i<size; i++) {
 			mail = (Mail)mails.get(i);
 			if( isInTime(mail.getTime(),fromTime, currentTime) ) {
-				if( (hasAttachmentsOnly && mail.attachments.size() > 0) || ( ! hasAttachmentsOnly ) ) {
+				if( ( ! hasAttachmentsOnly ) || (hasAttachmentsOnly && mail.attachments.size() > 0) ) {
 					if(mail.getSender().contains(sender)) {
 						if(mail.getSubject().contains(subject)) {
 							continue;
@@ -87,9 +87,9 @@ public class Filter implements IFilter {
 	private boolean isInTime(long time, int fromTime, long currentTime) {
 		if(fromTime == -1)
 			return true;
-		if( timeDifferences[fromTime] >  (int) ((currentTime-time)/1000) )
+		if( timeDifferences[fromTime] >= (int) ((currentTime-time)/1000L) ) {
 			return true;
+		}
 		return false;
 	}
-	
 }
