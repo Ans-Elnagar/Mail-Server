@@ -5,16 +5,16 @@ import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.IFilter;
 public class Filter implements IFilter {
 	
 	// when choosing display mails from :
-	public final int ALL = -1;
-	public final int ONE_HOUR = 0;
-	public final int ONE_DAY = 1;
-	public final int ONE_WEEK = 2;
-	public final int ONE_MONTH = 3;
+	public static final int ALL = -1;
+	public static final int ONE_HOUR = 0;
+	public static final int ONE_DAY = 1;
+	public static final int ONE_WEEK = 2;
+	public static final int ONE_MONTH = 3;
 	public static final int[] timeDifferences = {3600, 86400, 604800, 2592000};
 	private int fromTime = -1;
 	private boolean hasAttachmentsOnly;
-	private String sender;
-	private String subject;
+	private String sender = "";
+	private String subject = "";
 	
 	public Filter() {}
 	
@@ -71,9 +71,9 @@ public class Filter implements IFilter {
 		for(int i=0; i<size; i++) {
 			mail = (Mail)mails.get(i);
 			if( isInTime(mail.getTime(),fromTime, currentTime) ) {
-				if( (hasAttachmentsOnly && mail.attachments.size() > 0) || ( ! hasAttachmentsOnly ) ) {
-					if(sender!=null&&mail.getSender().contains(sender)) {
-						if(subject!=null&&mail.getSubject().contains(subject)) {
+				if( ( ! hasAttachmentsOnly ) || (hasAttachmentsOnly && mail.attachments.size() > 0) ) {
+					if(mail.getSender().contains(sender)) {
+						if(mail.getSubject().contains(subject)) {
 							continue;
 						}
 					}
@@ -87,9 +87,9 @@ public class Filter implements IFilter {
 	private boolean isInTime(long time, int fromTime, long currentTime) {
 		if(fromTime == -1)
 			return true;
-		if( timeDifferences[fromTime] >  (int) ((currentTime-time)/1000) )
+		if( timeDifferences[fromTime] >= (int) ((currentTime-time)/1000L) ) {
 			return true;
+		}
 		return false;
 	}
-	
 }
