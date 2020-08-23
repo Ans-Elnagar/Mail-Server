@@ -3,7 +3,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 public class FileTools {
 	public static File createFile(File file) {
@@ -219,7 +218,8 @@ public class FileTools {
 			e.printStackTrace();
 		}
 		return result;
-	}
+	}	
+
 }
 
 
