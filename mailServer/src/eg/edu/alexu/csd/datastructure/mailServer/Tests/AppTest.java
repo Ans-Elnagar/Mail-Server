@@ -1,4 +1,5 @@
 package eg.edu.alexu.csd.datastructure.mailServer.Tests;
+import eg.edu.alexu.csd.datastructure.mailServer.Interfaces.IMail;
 import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -171,6 +172,20 @@ class AppTest {
 		sort.quickSort(emails);
 		assertTrue("Mr. X".equals( ((Mail) emails.get(0)).getSender()));
 	}
+	/*@Test
+	void deleteTest() {
+		App app = new App();
+		app.signin("ans@fmail.com", "12345678");
+		Folder folder = new Folder(app.user.getEmail() + "/" ,"Sent");
+		Filter filter = new Filter();
+		Sort sort = new Sort(SORTING.NEWEST);
+		app.setViewingOptions(folder, filter, sort);
+		SLinkedList list = new SLinkedList();
+		IMail[] listOfMails = app.listEmails(1);
+		list.add(listOfMails[0]);
+		app.deleteEmails(list);
+		assertTrue(true);
+	}*/
 //	@Test 
 //	void composeRight() {
 //		App f=new App();

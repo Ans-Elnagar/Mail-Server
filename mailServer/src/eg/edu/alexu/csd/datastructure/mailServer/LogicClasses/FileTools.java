@@ -3,7 +3,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
+import static java.nio.file.StandardCopyOption.*;
 public class FileTools {
 	public static File createFile(File file) {
 		createFolder(file.getParentFile());
@@ -175,6 +177,16 @@ public class FileTools {
 			e.printStackTrace();
 		}
 	}
+	public static void moveFolder(String source,String destination ) {
+		try {
+			Files.move(new File(source).toPath(),
+					new File(destination).toPath(),
+					StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static SLinkedList loadMailsToList(Folder folder) {
 		SLinkedList mails=new SLinkedList();
 		try(Scanner in=new Scanner(new File(folder.getPath()+"/indexFile.txt"))){
@@ -199,7 +211,7 @@ public class FileTools {
 				mail.setAttachments(attachs);
 				mail.setImportance(Integer.parseInt(line[i]));
 				mail.setMailBody(readFile(folder.getPath()+"/"+mail.getSubject()+" "+mail.getTime()+"/mailBody.txt"));
-				mail.setMailDir(folder.getFolder());
+				mail.setMailDir(folder.getPath());
 				mails.add(mail);
 			}
 			

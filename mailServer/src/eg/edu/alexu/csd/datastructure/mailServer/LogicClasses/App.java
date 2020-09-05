@@ -69,8 +69,60 @@ public class App implements IApp {
 
 	@Override
 	public void deleteEmails(ILinkedList mails) {
-		// TODO Auto-generated method stub
-		
+		int size = mails.size();
+		Mail mail;
+		String dir = "Users/"+user.getEmail()+"/";
+		String source = dir + ((Mail)mails.get(0)).getMailDir().getName() + "/";
+		String trash = dir + "Trash/";
+		while(size-->0) {
+			mail = (Mail) mails.get(0);//O(1)
+			mails.remove(0);//O(1)
+			String folderName = mail.getSubject() +" "+ mail.getTime()+"/";
+			(new File(trash + folderName )).mkdir();
+			FileTools.moveFolder(source + folderName, trash + folderName);
+			// removing from indexFile
+			Scanner scanner;
+			PrintWriter writer;
+			String line;
+			String trashLine = "";
+			String finalFile = "";
+			String searchFor = mail.getSubject()+","+mail.getTime()+","+mail.getSender();
+			try {
+				scanner = new Scanner(new File(source + "indexFile.txt"));
+				while(scanner.hasNext()) {
+					line = scanner.nextLine();
+					if( ! line.contains(searchFor) )
+						finalFile += line + "\n";
+					else {
+						trashLine = line;
+					}
+				}
+				scanner.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			try {
+				writer = new PrintWriter(new File (source + "indexFile.txt"));
+				writer.print(finalFile);
+				finalFile = null;// release space
+				writer.close();
+				Writer output;
+				output = new BufferedWriter(new FileWriter(trash + "indexFile.txt"));
+				output.append(trashLine + "\n");
+				output.close();
+			} catch (IOException e) {e.printStackTrace();}
+			// add a file to detrmine the source
+			File file = new File(trash + folderName + "source.txt");
+			try {
+				writer = new PrintWriter(file);
+				writer.println(source.replace(dir,""));
+				writer.close();
+			} catch (FileNotFoundException e){e.printStackTrace();}
+			
+			
+		}
 	}
 
 	@Override
