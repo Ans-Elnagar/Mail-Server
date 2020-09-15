@@ -3,6 +3,7 @@ package eg.edu.alexu.csd.datastructure.mailServer.GUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import eg.edu.alexu.csd.datastructure.mailServer.LogicClasses.Mail;
 import javafx.fxml.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -12,13 +13,24 @@ public class ComposeController implements Initializable {
 	@FXML
 	private  BorderPane boarderPane;
 	Stage stage;
-	
+	Mail mail;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		mail=new Mail();
+		mail.setSender(Main.app.user.getEmail());
+		//TODO
+	}
+	public static void copyMail(Mail mail) {
+		
 		
 	}
-	
+	@FXML
+	void composeAction() {
+		mail.setTime(System.currentTimeMillis());
+		Main.app.compose(mail);
+		closeClicked();
+		
+	}
 	//handling moving the stage
 	double x,y;
 	@FXML

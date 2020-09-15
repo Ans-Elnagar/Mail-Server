@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane fx:id="boarderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.datastructure.mailServer.GUI.ComposeController">
    <top>
       <AnchorPane onMouseDragged="#barDragged" onMousePressed="#barPressed" prefHeight="26.0" prefWidth="800.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">

@@ -217,7 +217,7 @@
             </TableView>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="754.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <Button mnemonicParsing="false" onAction="#refreshAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #57606f;" text="Refresh" textFill="WHITE" translateX="-284.0">
+                  <Button mnemonicParsing="false" onAction="#refreshAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #57606f;" text="Refresh" textFill="WHITE" translateX="-164.0">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -228,7 +228,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <AnchorPane prefHeight="60.0" prefWidth="140.0" translateX="-157.0">
+                  <AnchorPane prefHeight="60.0" prefWidth="140.0" translateX="-37.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="26.0" prefWidth="142.0">
                            <children>
@@ -256,6 +256,17 @@
                            </cursor>
                         </ImageView>
                      </children></AnchorPane>
+                  <Button fx:id="restoreButton" mnemonicParsing="false" onAction="#restoreAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #57606f;" text="Restore" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#deleteAction" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #57606f;" text="Delete" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="14.0" />

@@ -27,6 +27,9 @@ public class InternalController implements Initializable {
 	private int page;
 	
 	@FXML
+	Button restoreButton;
+	
+	@FXML
 	private Label name;
 	@FXML
 	Label pageLabel;
@@ -67,6 +70,7 @@ public class InternalController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		page=1;
+		restoreButton.setVisible(false);
 		currentFolder=new Folder(Main.app.user.getEmail()+'/',"Inbox");
 		sort=SORTING.NEWEST;
 		filter=new Filter();
@@ -229,20 +233,29 @@ public class InternalController implements Initializable {
 		}
 	}
 	
-	
 	@FXML 
 	public void composeAction() {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("ComposeScene.fxml"));
-			Stage composeStage = new Stage();
-			composeStage.initModality(Modality.APPLICATION_MODAL);
-			composeStage.setScene(new Scene(root));
-			composeStage.initStyle(StageStyle.UNDECORATED);
-			composeStage.setResizable(false);
-			composeStage.showAndWait();
-		} catch (IOException e) {
-			e.printStackTrace();
+		ObservableList<Mail> mails=tableView.getSelectionModel().getSelectedItems();
+		if(mails.size()==0)
+			Main.currentMail=new Mail();
+		if(mails.size()==1)
+			Main.currentMail=mails.get(0);
+		if(mails.size()<=1) {
+			try {
+				Parent root = FXMLLoader.load(getClass().getResource("ComposeScene.fxml"));
+				Stage composeStage = new Stage();
+				composeStage.initModality(Modality.APPLICATION_MODAL);
+				composeStage.setScene(new Scene(root));
+				composeStage.initStyle(StageStyle.UNDECORATED);
+				composeStage.setResizable(false);
+				composeStage.showAndWait();
+				refreshAction();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		else
+			Main.popUp.createAlert("You should select 1 mail or nothing to write a new mail.");
 	}
 	
 	
@@ -261,6 +274,7 @@ public class InternalController implements Initializable {
 				messageStage.initStyle(StageStyle.UNDECORATED);
 				messageStage.setResizable(false);
 				messageStage.showAndWait();
+				refreshAction();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -292,6 +306,8 @@ public class InternalController implements Initializable {
 	@FXML
 	public void refreshAction() {
 		page=1;
+		filter.setSender("");
+		filter.setSubject("");
 		viewInTable(currentFolder,filter,sort,page);
 	}
 	
@@ -376,22 +392,40 @@ public class InternalController implements Initializable {
 	
 	@FXML
 	public void inboxSelected() {
+		restoreButton.setVisible(false);
 		folderSelected("Inbox");
 	}
 	@FXML
 	public void sentSelected() {
+		restoreButton.setVisible(false);
 		folderSelected("Sent");
 	}
 	@FXML
 	public void trashSelected() {
+		restoreButton.setVisible(true);
 		folderSelected("Trash");
 	}
 	@FXML
 	public void draftSelected() {
+		restoreButton.setVisible(false);
 		folderSelected("Draft");
 	}
 	
 	
+	@FXML
+	void restoreAction() {
+		//TODO : restore action
+		ObservableList<Mail> mails=tableView.getSelectionModel().getSelectedItems();
+		if(mails.size()==0)
+			Main.popUp.createAlert("You should select at least 1 mail.");
+		else {
+			SLinkedList list=new SLinkedList();
+			for(Mail mail:mails)
+				list.add(mail);
+			Main.app.moveEmails( list, null);
+		}
+		System.out.println("It works");
+	}
 	
 	//handling moving the stage
 	double x,y;

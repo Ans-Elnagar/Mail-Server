@@ -15,6 +15,10 @@ public class Mail implements IMail {
 		importance=0;
 		setAttachments(new SLinkedList());
 		receivers=new LinkedQueue();
+		setSubject("");
+		setSender("");
+		setMailBody("");
+		
 	}
 	//get subject
 	public String getSubject() {
